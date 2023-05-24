@@ -9,7 +9,7 @@
         <div class="card" style="border-radius: 1rem;">
           <div class="row g-0">
             <div class="col-md-6 col-lg-6 d-flex justify-content-center align-items-center">
-              <img class="mt-6" src="{{ Vite::asset('resources/images/Illustration-1.png') }}"
+              <img class="hidden lg:block mt-6" src="{{ Vite::asset('resources/images/Illustration-1.png') }}"
                 alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
             </div>
             <div class="col-md-6 col-lg-6 d-flex align-items-center">
