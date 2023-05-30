@@ -1,21 +1,19 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class inquiries extends Model
+class user_log extends Model
 {
     use HasFactory;
 
+    //mass assignable attributes
     protected $fillable = [
         'name',
         'email',
-        'phone',
-        'interest',
-        'source',
-        'message',
-        'logger'
+        'ip',
+        'mac',
+        'city'
     ];
 }

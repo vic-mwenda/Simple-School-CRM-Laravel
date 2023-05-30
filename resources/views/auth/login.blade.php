@@ -27,7 +27,7 @@
 
                   <div class="form-outline mb-4">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" name="email" style="border-radius:8px;" class="form-control form-control-lg" placeholder="enter your email" required/>
+                    <input type="email" id="email"  name="email" style="border-radius:8px;" class="form-control form-control-lg" placeholder="enter your email" required/>
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                   </div>
 
@@ -55,7 +55,7 @@
                   <a href="#!" class="small text-muted">Terms of use.</a>
                   <a href="#!" class="small text-muted">Privacy policy</a>
                 </form>
-              
+
 
               </div>
             </div>
@@ -67,5 +67,5 @@
 </section>
 
 
-    
+
 </x-guest-layout>

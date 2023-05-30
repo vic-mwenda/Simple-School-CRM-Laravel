@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\user_log;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,6 +29,35 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+
+        // Get IP address and location details
+        $ip_address = $_SERVER['REMOTE_ADDR'];
+//        $geopluginURL = 'http://www.geoplugin.net/php.gp?ip='. $ip_address;
+//        $geopluginData = file_get_contents($geopluginURL);
+//        $addrDetailsArr = unserialize($geopluginData);
+//        $city = $addrDetailsArr['geoplugin_city'];
+
+        // Get MAC address
+        ob_start();
+        system('ipconfig /all');
+        $mycom = ob_get_contents();
+        ob_clean();
+        $findme = "Physical";
+        $pmac = strpos($mycom, $findme);
+        $mac = substr($mycom, ($pmac + 36), 17);
+
+        // Insert login information into the database
+
+            $user_log = [
+                'name' => $request->user()->name,
+                'email' => $request->user()->email,
+                'ip' => $ip_address,
+                'mac' => $mac,
+//                'city' => $city,
+            ];
+
+            user_log::create($user_log);
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

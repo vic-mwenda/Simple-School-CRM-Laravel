@@ -4,7 +4,7 @@
 
         <li class="nav-item">
             <a class="nav-link " href="{{route('dashboard')}}">
-                <i class="bi bi-grid"></i>
+                <i class="bi bi-view-list"></i>
                 <span>Dashboard</span>
             </a>
         </li>
@@ -12,7 +12,7 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed " href="{{ route('manageinquiry.create') }}">
-                <i class="bi bi-menu-button-wide"></i><span>Create Inquiry</span>
+                <i class="bi bi-patch-plus-fill"></i><span>Create Inquiry</span>
             </a>
 
         </li><!-- End Manage Inquiries Nav -->

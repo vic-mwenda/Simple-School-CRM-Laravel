@@ -4,8 +4,8 @@
 
       <li class="nav-item">
         <a class="nav-link " href="{{route('dashboard')}}">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+            <i class="bi bi-view-list"></i>
+            <span>Dashboard</span>
         </a>
       </li>
 
@@ -18,7 +18,7 @@
       </li><!-- End Manage Inquiries Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" href="{{route('logger.index')}}">
           <i class="bi bi-journal-text"></i><span>User Logs</span>
         </a>
 
@@ -37,6 +37,12 @@
       </li> <!-- End Profile Settings Nav -->
 
     </ul>
+
+      <footer>
+          <div class=" ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0" style="margin-top: 50vh;text-decoration-line: none" >
+              <a style="text-decoration: none" href="mailto:itsupport@zetech.ac.ke"><i class="bi bi-patch-question-fill"></i> Contact Support</a>
+          </div>
+      </footer>
 
   </aside><!-- End Sidebar-->
 

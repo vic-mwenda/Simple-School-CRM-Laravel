@@ -12,7 +12,7 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed " href="{{ route('manageinquiry.index') }}">
-                <i class="bi bi-menu-button-wide"></i><span>Manage Inquiries</span>
+                <i class="bi bi-menu-button-wide"></i><span>View Inquiries</span>
             </a>
 
         </li><!-- End Manage Inquiries Nav -->
@@ -23,12 +23,6 @@
             </a>
 
         </li><!-- End User Logs Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('usermanage.index') }}" >
-                <i class="bi bi-people"></i><span>Manage Users</span>
-            </a>
-        </li><!-- End Manage users Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{route('profile.edit')}}">
