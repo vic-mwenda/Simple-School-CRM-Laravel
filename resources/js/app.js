@@ -1,10 +1,11 @@
 import './bootstrap';
 import 'flowbite';
+import { Modal } from 'flowbite';
 
 import.meta.glob([
     '../images/**',
   ]);
-
+import DataTable from 'datatables.net-dt';
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
@@ -112,12 +113,11 @@ Alpine.start();
       }, false)
     })
 
-  const datatables = select('.datatable', true)
-  datatables.forEach(datatable => {
-    new simpleDatatables.DataTable(datatable);
-  })
+    const datatable = new DataTable('.datatable',{
 
-  const mainContainer = select('#main');
+    })
+
+    const mainContainer = select('#main');
   if (mainContainer) {
     setTimeout(() => {
       new ResizeObserver(function() {
@@ -128,4 +128,61 @@ Alpine.start();
     }, 200);
   }
 
-  })();
+    const passwordInput = document.getElementById('password');
+    const lengthFeedback = document.getElementById('password-length');
+    const upperLowerFeedback = document.getElementById('password-upper-lower');
+    const numberFeedback = document.getElementById('password-number');
+    const passwordFeedback = document.getElementById('password-feedback');
+
+    passwordInput.addEventListener('keyup', () => {
+        const password = passwordInput.value;
+        let validLength = false;
+        let validUpperLower = false;
+        let validNumber = false;
+
+        // Check length
+        if (password.length >= 8) {
+            lengthFeedback.classList.remove('invalid');
+            lengthFeedback.classList.add('valid');
+            validLength = true;
+        } else {
+            lengthFeedback.classList.remove('valid');
+            lengthFeedback.classList.add('invalid');
+            validLength = false;
+        }
+
+        // Check upper and lowercase
+        if (/[a-z]/.test(password) && /[A-Z]/.test(password)) {
+            upperLowerFeedback.classList.remove('invalid');
+            upperLowerFeedback.classList.add('valid');
+            validUpperLower = true;
+        } else {
+            upperLowerFeedback.classList.remove('valid');
+            upperLowerFeedback.classList.add('invalid');
+            validUpperLower = false;
+        }
+
+        // Check at least one number
+        if (/\d/.test(password)) {
+            numberFeedback.classList.remove('invalid');
+            numberFeedback.classList.add('valid');
+            validNumber = true;
+        } else {
+            numberFeedback.classList.remove('valid');
+            numberFeedback.classList.add('invalid');
+            validNumber = false;
+        }
+
+        // Check if all conditions are met
+        if (validLength && validUpperLower && validNumber) {
+            passwordFeedback.style.display = 'none';
+        } else {
+            passwordFeedback.style.display = 'block';
+        }
+    });
+
+
+
+
+
+})();

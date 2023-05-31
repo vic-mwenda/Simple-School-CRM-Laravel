@@ -15,12 +15,12 @@
      <div class="col-lg-3"></div>
      <div class="col-lg-3">
          <a href="{{route('manageinquiry.print')}}">
-             <x-primary-button>{{ __('Print All Inquiries') }}</x-primary-button>
+             <x-primary-button><i class="bi bi-printer" style="font-size:20px;padding-right: 5px;"></i> {{ __('Print All Inquiries') }}</x-primary-button>
          </a>
      </div>
         <div class="col-lg-3 pb-4">
         <a href="{{route('manageinquiry.create')}}">
-               <x-primary-button>{{ __('Create Inquiry') }}</x-primary-button>
+               <x-primary-button><i class="bi bi-pencil-square" style="font-size:20px;padding-right: 5px;"></i>{{ __('Create Inquiry') }}</x-primary-button>
         </a>
         </div>
      </div>
@@ -28,7 +28,7 @@
 
     <div class="card">
         <div class="card-body">
-            <table class="table table-bordered datatable">
+            <table class="table table-responsive-sm table-striped datatable">
                 <thead>
                 <tr>
 
@@ -46,12 +46,12 @@
                         <td>{{$inquiry->email}}</td>
                         <td>{{$inquiry->interest}}</td>
                         <td>{{$inquiry->source}}</td>
-                        <td>
+                        <td class="w-2">
                             <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical" style="font-size: 2rem;"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li><a class="dropdown-item" href="{{route('manageinquiry.view',$inquiry->id)}}">View Inquiry</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('manageinquiry.download',$inquiry->id)}}">Download Inquiry</a></li>
+                                    <li><a class="dropdown-item" href="{{route('manageinquiry.view',$inquiry->id)}}"><i class="bi bi-eye-fill"></i> View Inquiry</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('manageinquiry.download',$inquiry->id)}}"><i class="bi bi-box-arrow-down"></i> Download Inquiry</a></li>
                                 </ul>
                             </div>
                         </td>

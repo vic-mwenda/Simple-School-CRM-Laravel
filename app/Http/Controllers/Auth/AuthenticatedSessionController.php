@@ -30,36 +30,37 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-
-        // Get IP address and location details
         $ip_address = $_SERVER['REMOTE_ADDR'];
-//        $geopluginURL = 'http://www.geoplugin.net/php.gp?ip='. $ip_address;
-//        $geopluginData = file_get_contents($geopluginURL);
-//        $addrDetailsArr = unserialize($geopluginData);
-//        $city = $addrDetailsArr['geoplugin_city'];
+        $geopluginURL = 'http://www.geoplugin.net/php.gp?ip='. $ip_address;
+        $geopluginData = file_get_contents($geopluginURL);
+        $addrDetailsArr = unserialize($geopluginData);
+        $city = $addrDetailsArr['geoplugin_city'];
 
-        // Get MAC address
         ob_start();
-        system('ipconfig /all');
+        system('ipconfig/all');
         $mycom = ob_get_contents();
         ob_clean();
         $findme = "Physical";
         $pmac = strpos($mycom, $findme);
         $mac = substr($mycom, ($pmac + 36), 17);
 
-        // Insert login information into the database
-
             $user_log = [
                 'name' => $request->user()->name,
                 'email' => $request->user()->email,
                 'ip' => $ip_address,
                 'mac' => $mac,
-//                'city' => $city,
+                'city' => $city,
             ];
 
             user_log::create($user_log);
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+            if ($request->user()->first_login) {
+               return redirect(route('password.set'));
+            }
+            else{
+                return redirect()->intended(RouteServiceProvider::HOME);
+            }
+
     }
 
     /**

@@ -16,7 +16,7 @@
      <div class="col-lg-3"></div>
         <div class="col-lg-3 pb-4">
         <a href="{{route('usermanage.create')}}">
-               <x-primary-button>{{ __('Add User') }}</x-primary-button>
+               <x-primary-button><i class="bi bi-file-earmark-plus" style="font-size: 20px;padding-right: 5px;"></i>{{ __('Add User') }}</x-primary-button>
         </a>
         </div>
      </div>
@@ -33,7 +33,6 @@
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Role</th>
-                    <th scope="col">Action</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -53,19 +52,14 @@
                             <td>Viewer</td>
                         @endif
 
-                        <td>
-
-                        <a href="{{route('usermanage.edit',$user->id)}}">
-                        <x-secondary-button>{{ __('Edit') }}</x-secondary-button>
-                        </a>
-
-                        </td>
-                        <td>
-                        <form action="{{route('usermanage.destroy', $user->id)}}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <x-danger-button>{{ __('Delete') }}</x-danger-button>
-                        </form>
+                        <td style="width: 1%;">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical" style="font-size: 2rem;"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li> <a class="dropdown-item" href="{{route('usermanage.edit',$user->id)}}"><i class="bi bi-pen" style="font-size: 1rem;padding-right: 5px;"></i>{{ __('Edit') }}</a></li>
+                                    <li> <a class="dropdown-item" href="{{route('usermanage.destroy', $user->id)}}}}" data-confirm-delete="true"><i class="bi bi-trash" style="font-size: 1rem;padding-right: 5px;"></i>{{ __('Delete') }}</a></li>
+                                </ul>
+                            </div>
                         </td>
                     </tr>
 

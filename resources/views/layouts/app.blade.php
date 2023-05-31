@@ -18,8 +18,8 @@
     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
 </head>
 
-<body>
 
+<body>
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
@@ -86,6 +86,7 @@
   </header>
 
 
+
   @if(Auth::user()->role == 0)
       @include('layouts.admin_navigation')
   @elseif(Auth::user()->role == 1)
@@ -97,11 +98,14 @@
 
   <main id="main" class="main">
 
+
   @if (isset($header))
         <div class="page-title">
             {{ $header }}
         </div>
   @endif
+
+  @include('sweetalert::alert')
 
   {{ $slot }}
   </main>
@@ -116,6 +120,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.40.0/apexcharts.min.js" integrity="sha512-Kr1p/vGF2i84dZQTkoYZ2do8xHRaiqIa7ysnDugwoOcG0SbIx98erNekP/qms/hBDiBxj336//77d0dv53Jmew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js" integrity="sha512-VdqgeoWrVJcsDXFlQEKqE5MyhaIgB9yXUVaiUa8DR2J4Lr1uWcFm+ZH/YnzV5WqgKf4GPyHQ64vVLgzqGIchyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script scr="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 </body>
 

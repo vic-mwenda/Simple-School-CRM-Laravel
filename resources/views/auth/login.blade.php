@@ -42,6 +42,14 @@
                              {{ __('Log in') }}
                     </x-primary-button>
                   </div>
+
+                  <div class="mb-4">
+                      <a href="{{url('auth/google')}}">
+                          <x-google-button style="text-align:center;">
+                              {{ __('Sign in with google') }}
+                          </x-google-button>
+                      </a>
+                  </div>
                    <!-- Remember Me -->
                   <div class="block mt-4">
                     <label for="remember_me" class="inline-flex items-center">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Controllers\Controller;
 use App\Rules\EmailIsValid;
 use App\Providers\RouteServiceProvider;
@@ -21,6 +22,10 @@ class ViewUsersController extends Controller
     public function index()
     {
         $users = User::all();
+        $title = 'Delete User!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+
         return view('users.ManageUser', compact('users'));
     }
 
@@ -41,17 +46,18 @@ class ViewUsersController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255',new EmailIsValid, 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'role'=> $request->role,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make('zetech123'),
         ]);
 
         event(new Registered($user));
+
+        toast('Successfully added user','success');
 
         return redirect('/usermanage');
     }
@@ -80,8 +86,9 @@ class ViewUsersController extends Controller
         $user->role = $request ->input('role');
 
         $user->save();
+        toast('Successfully updated user','success');
 
-        return redirect('/usermanage')->with('success','successfully updated');
+        return redirect('/usermanage');
 
     }
 
@@ -94,6 +101,8 @@ class ViewUsersController extends Controller
         $user->delete();
 
     // Redirect to the users index page or show a success message
-        return redirect('/usermanage')->with('status','deleted');
+        toast('Successfully deleted user','success');
+
+        return redirect('/usermanage');
     }
 }

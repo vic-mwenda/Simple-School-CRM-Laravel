@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Barryvdh\DomPDF\PDF;
 use Dompdf\Dompdf;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\Config\Repository;
@@ -56,7 +57,7 @@ class EnquiryManagerController extends Controller
         ];
 
         inquiries::create($inquiry);
-
+        toast('Successfully added inquiry','success');
         return redirect(route('dashboard'))->with('success', 'Inquiry has been submitted successfully');
     }
 

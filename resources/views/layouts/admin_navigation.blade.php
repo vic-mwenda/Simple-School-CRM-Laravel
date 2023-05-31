@@ -30,6 +30,12 @@
         </a>
       </li><!-- End Manage users Nav -->
 
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('insights.index') }}" >
+                <i class="bi bi-bar-chart"></i><span>Insights</span>
+            </a>
+        </li><!-- End Manage users Nav -->
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{route('profile.edit')}}">
           <i class="bi bi-gear"></i><span>Profile Settings</span>
@@ -39,7 +45,7 @@
     </ul>
 
       <footer>
-          <div class=" ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0" style="margin-top: 50vh;text-decoration-line: none" >
+          <div class=" ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0" style="margin-top: 45vh;text-decoration-line: none" >
               <a style="text-decoration: none" href="mailto:itsupport@zetech.ac.ke"><i class="bi bi-patch-question-fill"></i> Contact Support</a>
           </div>
       </footer>

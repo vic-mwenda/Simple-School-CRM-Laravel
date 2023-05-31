@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserLoggerController;
 use App\Http\Controllers\ViewUsersController;
 use App\Http\Controllers\EnquiryManagerController;
+use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\InsightsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -49,3 +51,10 @@ Route::get('/manageinquiry/print/',[EnquiryManagerController::class,'print'])->n
 
 Route::get('/logger',[UserLoggerController::class,'index'])->middleware('role')->name('logger.index');
 
+//OAUTH2 google login
+
+Route::get('auth/google', [GoogleAuthController::class, 'signInwithGoogle'])->name('google.login');
+Route::get('callback/google', [GoogleAuthController::class, 'callbackToGoogle']);
+
+// Insights module
+Route::get('/insights',[InsightsController::class,'showChart'])->middleware('role')->name('insights.index');

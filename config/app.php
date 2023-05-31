@@ -44,7 +44,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -171,6 +171,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -186,6 +188,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'socialite'=> Laravel\Socialite\SocialiteServiceProvider::class,
+        'alert'=>RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+
     ])->toArray(),
 
 ];
