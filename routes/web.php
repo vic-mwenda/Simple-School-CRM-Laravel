@@ -6,6 +6,8 @@ use App\Http\Controllers\ViewUsersController;
 use App\Http\Controllers\EnquiryManagerController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\InsightsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CustomerManagerController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,9 +27,7 @@ Route::middleware('role')->group(function () {
 });
 //dashboard access routes
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 //profile management routes
 
@@ -46,6 +46,10 @@ Route::post('/manageinquiry/save',[EnquiryManagerController::class,'store'])->na
 Route::get('/manageinquiry/view/{inquiry}',[EnquiryManagerController::class,'show'])->name('manageinquiry.view');
 Route::get('/manageinquiry/download/{inquiry}',[EnquiryManagerController::class,'download'])->name('manageinquiry.download');
 Route::get('/manageinquiry/print/',[EnquiryManagerController::class,'print'])->name('manageinquiry.print');
+Route::get('/get-states',[EnquiryManagerController::class,'states'])->name('manageinquiry.states');
+Route::post('/update-table',[EnquiryManagerController::class,'filter'])->name('manageinquiry.filter');
+Route::post('/bulk-action',[EnquiryManagerController::class,'action'])->name('manageinquiry.action');
+
 
 //Logging routes
 
@@ -57,4 +61,12 @@ Route::get('auth/google', [GoogleAuthController::class, 'signInwithGoogle'])->na
 Route::get('callback/google', [GoogleAuthController::class, 'callbackToGoogle']);
 
 // Insights module
-Route::get('/insights',[InsightsController::class,'showChart'])->middleware('role')->name('insights.index');
+Route::get('/insights',[InsightsController::class,'Show'])->middleware('role')->name('insights.index');
+
+//customer manager
+Route::get('/customers',[CustomerManagerController::class,'index'])->name('customers.index');
+Route::get('/customers/{customer}',[CustomerManagerController::class,'view'])->name('customer.view');
+Route::post('/customers/update-table',[CustomerManagerController::class,'filter'])->name('customer.filter');
+Route::post('/customers/bulk-action',[CustomerManagerController::class,'action'])->name('customer.action');
+
+

@@ -14,6 +14,7 @@ class user_log extends Model
         'email',
         'ip',
         'mac',
-        'city'
+        'city',
+        'created_at'
     ];
 }

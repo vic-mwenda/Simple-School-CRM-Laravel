@@ -31,11 +31,11 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $ip_address = $_SERVER['REMOTE_ADDR'];
-        $geopluginURL = 'http://www.geoplugin.net/php.gp?ip='. $ip_address;
-        $geopluginData = file_get_contents($geopluginURL);
-        $addrDetailsArr = unserialize($geopluginData);
-        $city = $addrDetailsArr['geoplugin_city'];
-
+//        $geopluginURL = 'http://www.geoplugin.net/php.gp?ip='. $ip_address;
+//        $geopluginData = file_get_contents($geopluginURL);
+//        $addrDetailsArr = unserialize($geopluginData);
+//        $city = $addrDetailsArr['geoplugin_city'];
+//
         ob_start();
         system('ipconfig/all');
         $mycom = ob_get_contents();
@@ -49,7 +49,7 @@ class AuthenticatedSessionController extends Controller
                 'email' => $request->user()->email,
                 'ip' => $ip_address,
                 'mac' => $mac,
-                'city' => $city,
+//                'city' => $city,
             ];
 
             user_log::create($user_log);

@@ -13,20 +13,20 @@ class GoogleAuthController extends Controller
     public function callbackToGoogle()
     {
 
-            $user = Socialite::driver('google')->user();
+        $user = Socialite::driver('google')->user();
 
-            $finduser = User::where('email', $user->email)->first();
+        $finduser = User::where('email', $user->email)->first();
 
-            if($finduser){
+        if($finduser){
 
                 Auth::login($finduser);
 
                 return redirect('/dashboard');
             } else {
 
-            toast('User does not exist','warning');
+                 toast('User does not exist','warning');
 
-            return redirect('login');
+                 return redirect('login');
         }
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\inquiries;
 use App\Models\user_log;
+use App\Models\Chart;
+use App\Models\PieChart;
 
 class InsightsController extends Controller
 {
@@ -14,52 +16,59 @@ class InsightsController extends Controller
     public function index()
     {
         $inquiries= inquiries::all();
-        $TotalInquiries=$inquiries->count();
-        return view('insights.app',['TotalInquiries'=>$TotalInquiries]);
+        return $inquiries->count();
+    }
+    /**
+     * Show the Pie_chart containing statistics for inquiries-How they heard about us.
+     */
+
+    public function PieChart(){
+        $start = '2023-01-01'; // Replace with your desired start date
+        $end = '2023-12-31'; // Replace with your desired end date
+
+        $results = inquiries::selectRaw('source, COUNT(*) AS total')
+            ->whereBetween('created_at', [$start, $end])
+            ->groupBy('source')
+            ->get();
+
+        $totalInquiries = $results->sum('total');
+
+        $Piechart = new PieChart;
+        $Piechart->labels = $results->pluck('source')->toArray();
+        $Piechart->dataset = $results->map(function ($item) use ($totalInquiries) {
+            return round(($item->total / $totalInquiries) * 100, 2);
+        })->toArray();
+        $Piechart->colours = ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56','red','blue','yellow']; // You can generate random colours here if needed
+
+        return $Piechart;
     }
 
     /**
-     * Show the chart for statistics showing user logs.
+     * Show the chart containing statistics for inquiries.
      */
-
-
-    public function showChart()
+    function Show()
     {
-        $visitorsCount = [];
-        $myCat = [];
+        $TotalInquiries=$this->index();
 
-        $totalDays = cal_days_in_month(CAL_GREGORIAN, date("m"), date("Y"));
+        $start = '2023-01-01'; // To be replaced with the desired start date gotten from UI
+        $end = '2023-12-31'; // To be replaced with the desired start date gotten from UI
 
-        $monthArray = [];
+        $results = inquiries::selectRaw('COUNT(*) AS y, DATE(created_at) AS x')
+            ->whereBetween('created_at', [$start, $end])
+            ->groupBy('x')
+            ->orderBy('x', 'asc')
+            ->get();
 
-        for ($i = 1; $i <= $totalDays; $i++) {
-            $key = ($i < 10) ? '0' . $i : $i;
-            $monthArray[$key] = 0;
-            $myCat[] = 'Day ' . $i;
-        }
+        // Prepare the data for returning with the view
+        $chart = new Chart;
+        $chart->labels = $results->pluck('x')->toArray();
+        $chart->dataset = $results->pluck('y')->toArray();
+        $chart->colours = ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'];
+        $PieChart = $this->PieChart();
 
-        $results = user_log::select('created_at')->get();
+        return view('insights.app', compact('chart','TotalInquiries','PieChart'));
 
-        if ($results->count() > 0) {
-            foreach ($results as $row) {
-                $userDate = $row->created_at;
-                $dateArray = explode('/', $userDate);
-                $year = $dateArray[0];
-                $currentMonth = date('m', mktime(0, 0, 0, $dateArray[1], 10));
 
-                if ($year == date("Y") && $currentMonth == date("m")) {
-                    if (array_key_exists($dateArray[2], $monthArray)) {
-                        $monthArray[$dateArray[2]]++;
-                    }
-                }
-            }
-        }
-
-        $visitorsCount = array_values($monthArray);
-
-        $currentMonth = date("F");
-
-        return view('insights.app', compact('myCat', 'visitorsCount', 'currentMonth'));
     }
 
     /**
@@ -70,13 +79,6 @@ class InsightsController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

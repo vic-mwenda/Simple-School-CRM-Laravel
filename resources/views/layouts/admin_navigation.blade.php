@@ -4,8 +4,8 @@
 
       <li class="nav-item">
         <a class="nav-link " href="{{route('dashboard')}}">
-            <i class="bi bi-view-list"></i>
-            <span>Dashboard</span>
+            <i class="bi bi-house"></i>
+            <span>Home</span>
         </a>
       </li>
 
@@ -29,6 +29,12 @@
           <i class="bi bi-people"></i><span>Manage Users</span>
         </a>
       </li><!-- End Manage users Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('customers.index') }}" >
+                <i class="bi bi-people"></i><span>Customers</span>
+            </a>
+        </li><!-- End Manage customers Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('insights.index') }}" >

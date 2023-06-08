@@ -28,14 +28,27 @@
       </div>
 
         <div class="mt-4">
-            <x-input-label for="email" :value="__('User Role')" />
+            <div class="row">
+                <div class="col-lg-6">
+                    <x-input-label for="email" :value="__('Campus')" />
 
-            <select name="role" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" id="role">
-                <option value="0">Administrator</option>
-                <option value="1">User</option>
-                <option value="2">Viewer</option>
-            </select>
+                    <select name="campus" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" id="role">
+                        <option value="Thika Road Campus">Thika Road Campus</option>
+                        <option value="Mang'u Campus">Mang'u Campus</option>
+                        <option value="Nairobi Campus 1">Nairobi Campus(Pioneer Hse)</option>
+                        <option value="Nairobi Campus 2">Nairobi Campus(Stanchart)</option>
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <x-input-label for="email" :value="__('User Role')" />
 
+                    <select name="role" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" id="role">
+                        <option value="0">Administrator</option>
+                        <option value="1">User</option>
+                        <option value="2">Viewer</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
       <div class="flex items-center justify-end mt-4">

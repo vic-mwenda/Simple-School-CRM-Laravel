@@ -5,6 +5,11 @@ import { Modal } from 'flowbite';
 import.meta.glob([
     '../images/**',
   ]);
+import {Chart} from "chart.js";
+import AirDatepicker from 'air-datepicker';
+import 'air-datepicker/air-datepicker.css';
+import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
+
 import DataTable from 'datatables.net-dt';
 import Alpine from 'alpinejs';
 
@@ -30,6 +35,16 @@ Alpine.start();
       select(el, all).addEventListener(type, listener)
     }
   }
+    function removePreloader() {
+        var preloader = document.getElementById('preloader');
+        preloader.style.display = 'none';
+    }
+
+  window.addEventListener('load', function () {
+        const preloader = select('.typewriter');
+        setTimeout(preloader.style.display = 'none',1000)
+    });
+
   const onscroll = (el, listener) => {
     el.addEventListener('scroll', listener)
   }
@@ -113,9 +128,12 @@ Alpine.start();
       }, false)
     })
 
-    const datatable = new DataTable('.datatable',{
+    // const datatable = new DataTable('.datatable',{
+    //     destroy:true,
+    //     searching: false,
+    // })
 
-    })
+
 
     const mainContainer = select('#main');
   if (mainContainer) {
@@ -180,9 +198,6 @@ Alpine.start();
             passwordFeedback.style.display = 'block';
         }
     });
-
-
-
 
 
 })();

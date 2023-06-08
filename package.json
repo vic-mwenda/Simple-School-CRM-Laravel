@@ -19,8 +19,11 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.11.7",
+        "air-datepicker": "^3.3.5",
         "bootstrap": "^5.2.3",
+        "chart.js": "^4.3.0",
         "datatables.net-dt": "^1.13.4",
+        "flowbite-datepicker": "^1.2.2",
         "sweetalert2": "^11.7.8"
     }
 }

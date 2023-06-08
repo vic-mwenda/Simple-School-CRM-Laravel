@@ -24,7 +24,8 @@ class User extends Authenticatable
         'role',
         'gauth_id',
         'gauth_type',
-        'first_login'
+        'first_login',
+        'campus'
     ];
 
     /**
@@ -46,4 +47,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function inquiries()
+    {
+        return $this->hasMany(inquiries::class);
+    }
 }

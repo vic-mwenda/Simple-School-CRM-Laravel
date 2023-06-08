@@ -44,7 +44,7 @@ class ViewUsersController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255','unique:'.User::class],
             'email' => ['required', 'string', 'email', 'max:255',new EmailIsValid, 'unique:'.User::class],
         ]);
 
@@ -52,6 +52,7 @@ class ViewUsersController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role'=> $request->role,
+            'campus'=> $request->campus,
             'password' => Hash::make('zetech123'),
         ]);
 
