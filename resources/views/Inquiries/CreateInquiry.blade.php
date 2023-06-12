@@ -22,18 +22,18 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label style="font-weight: bold;padding-top: 10px;" for="fullName">Full Name<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
-                                <input type="text" class="form-control" name="name" id="fullName" placeholder="Enter the full name">
+                                <input type="text" class="form-control" name="name" id="fullName" value="{{ old('name') }}" placeholder="Enter the full name">
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
                             <div class="form-group">
                                 <label style="font-weight: bold;padding-top: 10px;" for="email">Email Address<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Enter the email address">
+                                <input type="email" class="form-control" name="email" id="email" value="{{ old('email') }}" placeholder="Enter the email address">
                                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
 
                             </div>
                             <div class="form-group">
                                 <label style="font-weight: bold;padding-top: 10px;" for="phone">Phone Number<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
-                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter the phone number">
+                                <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" placeholder="Enter the phone number">
                                 <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                             </div>
                             <div class="form-group">
@@ -70,12 +70,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label style="font-weight: bold;padding-top: 10px;" for="city">City/Town</label>
-                                        <input type="text" class="form-control" id="city" name="town" placeholder="Enter your city">
+                                        <input type="text" class="form-control" id="city" value="{{ old('town') }}" name="town" placeholder="Enter your city">
                                         <x-input-error :messages="$errors->get('town')" class="mt-2" />
                                     </div>
                                     <div class="form-group">
                                         <label style="font-weight: bold;padding-top: 10px;" for="postalCode">Postal Code</label>
-                                        <input type="text" class="form-control" id="postalCode" name="postal_code" placeholder="Enter the postal code">
+                                        <input type="text" class="form-control" id="postalCode" name="postal_code" value="{{ old('postal_code') }}" placeholder="Enter the postal code">
                                         <x-input-error :messages="$errors->get('postal_code')" class="mt-2" />
                                     </div>
                                   </div>
@@ -95,19 +95,24 @@
                             </div>
                             <div class="form-group pt-2">
                                <label class="fw-bold" for="subject">Subject<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
-                               <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter the subject of your inquiry">
+                               <input type="text" class="form-control" id="subject" name="subject" value="{{ old('subject') }}" placeholder="Enter the subject of your inquiry">
                                 <x-input-error :messages="$errors->get('subject')" class="mt-2" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group pt-2" id="courseNameField" style="display: none;">
                                 <label class="fw-bold" for="courseName">Course Name<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
-                                <input type="text" class="form-control" id="courseName" name="course_name" placeholder="Enter the course name">
+                                <input class="form-control" list="datalistOptions" id="courseName" name="course_name" value="{{ old('course_name') }}" placeholder="Enter course name">
+                                <datalist id="datalistOptions">
+                                    @foreach($courses as $course)
+                                        <option value="{{$course->course_name}}">{{$course->course_name}}</option>
+                                    @endforeach
+                                </datalist>
                                 <x-input-error :messages="$errors->get('course_name')" class="mt-2" />
                             </div>
                             <div class="form-group pt-2">
                                 <label class="fw-bold" for="message">Message</label>
-                                <textarea class="form-control" name="message" id="message" rows="5" placeholder="Enter your message"></textarea>
+                                <textarea class="form-control" name="message" id="message" rows="5" value="{{ old('message') }}" placeholder="Enter your message"></textarea>
                                 <x-input-error :messages="$errors->get('message')" class="mt-2" />
                             </div>
                         </div>
@@ -129,7 +134,7 @@
                                 <x-input-error :messages="$errors->get('education_level')" class="mt-2" />
                             </div>
                             <div class="form-group pt-2">
-                                <label class="fw-bold" for="hearAboutUs">How did you hear about us?</label><br>
+                                <label class="fw-bold" for="hearAboutUs">How did you hear about us?<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label><br>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="how_did_you_hear" id="website" value="website">
                                     <label class="form-check-label" for="website">Website</label>
@@ -160,7 +165,7 @@
                         <div class="col-md-6">
                             <div class="form-group pt-2">
                                 <label class="fw-bold" for="institutionAttended">Current or Last Institution Attended</label>
-                                <input type="text" class="form-control" name="institution_attended" id="institutionAttended" placeholder="Enter the institution name">
+                                <input type="text" class="form-control" name="institution_attended" value="{{ old('institution_attended') }}" id="institutionAttended" placeholder="Enter the institution name">
                                 <x-input-error :messages="$errors->get('institution_attended')" class="mt-2" />
                             </div>
 

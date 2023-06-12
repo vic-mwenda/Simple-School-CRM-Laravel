@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\customer;
 use Illuminate\Http\Request;
 use App\Models\inquiries;
 use App\Models\user_log;
@@ -26,17 +27,17 @@ class InsightsController extends Controller
         $start = '2023-01-01'; // Replace with your desired start date
         $end = '2023-12-31'; // Replace with your desired end date
 
-        $results = inquiries::selectRaw('source, COUNT(*) AS total')
+        $results = customer::selectRaw('how_did_you_hear, COUNT(*) AS total')
             ->whereBetween('created_at', [$start, $end])
-            ->groupBy('source')
+            ->groupBy('how_did_you_hear')
             ->get();
 
-        $totalInquiries = $results->sum('total');
+        $totalCustomers = $results->sum('total');
 
         $Piechart = new PieChart;
-        $Piechart->labels = $results->pluck('source')->toArray();
-        $Piechart->dataset = $results->map(function ($item) use ($totalInquiries) {
-            return round(($item->total / $totalInquiries) * 100, 2);
+        $Piechart->labels = $results->pluck('how_did_you_hear')->toArray();
+        $Piechart->dataset = $results->map(function ($item) use ($totalCustomers) {
+            return round(($item->total / $totalCustomers) * 100, 2);
         })->toArray();
         $Piechart->colours = ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56','red','blue','yellow']; // You can generate random colours here if needed
 

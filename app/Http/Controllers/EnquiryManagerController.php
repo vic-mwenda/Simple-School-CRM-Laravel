@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Barryvdh\DomPDF\PDF;
 use Dompdf\Dompdf;
 use Illuminate\Auth\Events\Registered;
@@ -26,6 +27,17 @@ class EnquiryManagerController extends Controller
 
         return view('Inquiries.ManageInquiry',['inquiries' => $inquiries]);
     }
+    /**
+     * Display a listing of the inquiries made by a user.
+     */
+    public function getUserInquiries()
+    {
+        $user = auth()->user();
+        $inquiries = inquiries::where('user_id', $user->id)->get();
+
+        return view('Inquiries.ManageInquiry', ['inquiries' => $inquiries]);
+    }
+
     /**
      * Filter our tables
      */
@@ -60,8 +72,9 @@ class EnquiryManagerController extends Controller
     public function create()
     {
         $country = new Countries();
+        $courses = Course::all();
         $countries = $country->all();
-        return view('Inquiries.CreateInquiry',compact('countries'));
+        return view('Inquiries.CreateInquiry',compact('countries','courses'));
     }
 
     /**
@@ -83,6 +96,7 @@ class EnquiryManagerController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $userId = Auth::id();
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => 'required|email',
@@ -96,11 +110,11 @@ class EnquiryManagerController extends Controller
             'education_level' => 'nullable',
             'institution_attended' => 'nullable',
             'field_of_study' => 'nullable',
-            'how_did_you_hear' => 'nullable',
+            'how_did_you_hear' => 'required',
             'consent_terms' => 'required|string',
             'message' => 'string',
             'category' => 'required',
-            'course_name' => 'string',
+            'course_name' => 'nullable',
             'subject' => 'required',
         ]);
 
@@ -121,10 +135,10 @@ class EnquiryManagerController extends Controller
                 'institution_attended' => $request->input('institution_attended'),
                 'field_of_study' => $request->input('field_of_study'),
                 'how_did_you_hear' => $request->input('how_did_you_hear'),
+                'user_id'=>$userId
             ]);
         }
 
-        $userId = Auth::id();
         $inquiries= [
             'message' => $request->input('message'),
             'customer_id' => $customer->id,

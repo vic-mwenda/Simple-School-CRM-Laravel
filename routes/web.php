@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserLoggerController;
 use App\Http\Controllers\ViewUsersController;
 use App\Http\Controllers\EnquiryManagerController;
+use App\Http\Controllers\CourseManagerController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\InsightsController;
 use App\Http\Controllers\DashboardController;
@@ -46,6 +47,7 @@ Route::post('/manageinquiry/save',[EnquiryManagerController::class,'store'])->na
 Route::get('/manageinquiry/view/{inquiry}',[EnquiryManagerController::class,'show'])->name('manageinquiry.view');
 Route::get('/manageinquiry/download/{inquiry}',[EnquiryManagerController::class,'download'])->name('manageinquiry.download');
 Route::get('/manageinquiry/print/',[EnquiryManagerController::class,'print'])->name('manageinquiry.print');
+Route::get('myinquiries',[EnquiryManagerController::class,'getUserInquiries'])->name('myinquiries');
 Route::get('/get-states',[EnquiryManagerController::class,'states'])->name('manageinquiry.states');
 Route::post('/update-table',[EnquiryManagerController::class,'filter'])->name('manageinquiry.filter');
 Route::post('/bulk-action',[EnquiryManagerController::class,'action'])->name('manageinquiry.action');
@@ -68,5 +70,10 @@ Route::get('/customers',[CustomerManagerController::class,'index'])->name('custo
 Route::get('/customers/{customer}',[CustomerManagerController::class,'view'])->name('customer.view');
 Route::post('/customers/update-table',[CustomerManagerController::class,'filter'])->name('customer.filter');
 Route::post('/customers/bulk-action',[CustomerManagerController::class,'action'])->name('customer.action');
+Route::get('/mycustomers',[CustomerManagerController::class,'getUserCustomers'])->name('mycustomers');
 
+//Course manager
+Route::get('/courses',[CourseManagerController::class,'index'])->name('course.index');
+Route::get('/courses/create',[CourseManagerController::class,'create'])->name('course.create');
+Route::post('/courses/store',[CourseManagerController::class,'store'])->name('course.store');
 

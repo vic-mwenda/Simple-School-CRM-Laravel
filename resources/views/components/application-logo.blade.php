@@ -1,2 +1,2 @@
-<img src="{{Vite::asset('resources/images/Logo-2.png')}}" alt="logo" style="height:100px;">
+<img src="{{Vite::asset('resources/images/logo-freer.png')}}"  alt="logo" style="height:35px;">
 

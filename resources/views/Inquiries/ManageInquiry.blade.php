@@ -233,8 +233,22 @@
         const table = $('.datatable').DataTable({
             paging:false,
             dom: 'lrtip',
+            responsive: true,
+            buttons: [
+                {
+                    extend: 'excel',
+                    modifier: {
+                        page: 'current'
+                    },
+                    text: 'Export to Excel',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                'print'
+            ],
             language: {
-                info: '' // Empty string to remove the footer section
+                info: ''
             }
         });
 

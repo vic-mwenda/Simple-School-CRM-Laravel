@@ -78,6 +78,15 @@
                                 </td>
                             </tr>
 
+                            <tr class="bg-white dark:bg-gray-800">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Date of Registration
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{$customers->created_at}}
+                                </td>
+                            </tr>
+
                             </tbody>
                         </table>
                     </div>

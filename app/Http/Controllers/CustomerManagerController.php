@@ -10,8 +10,17 @@ use App\Models\inquiries;
 class CustomerManagerController extends Controller
 {
     function index(){
-        $customers =customer::all();
+        $customers =customer::paginate(5);
         return view('customers.index',compact('customers'));
+    }
+
+    public function getUserCustomers()
+    {
+        $user = auth()->user();
+
+        $customers = $user->customers()->paginate(5);
+
+        return view('customers.index', ['customers' => $customers]);
     }
 
     function view(customer $customer){
@@ -30,7 +39,7 @@ class CustomerManagerController extends Controller
     /**
      * Handle bulk actions
      */
-    public function action(Request $request):RedirectResponse
+    public function action(Request $request)
     {
         $action = $request->input('bulkAction');
         $selectedItems = $request->input('selectedItems');
@@ -39,6 +48,6 @@ class CustomerManagerController extends Controller
             customer::whereIn('id', $selectedItems)->delete();
         }
 
-        return redirect()->route('customers.index');
+        return $this->getUserCustomers();
     }
 }

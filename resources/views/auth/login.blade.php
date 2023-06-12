@@ -16,11 +16,10 @@
               <div class="card-body p-4 p-lg-5 text-black">
               <form method="POST" action="{{ route('login') }}">
                 @csrf
-
-                  <div class="d-flex align-items-center">
-                         <a href="/">
-                            <x-application-logo class="img-fluid h-10" />
-                         </a>
+                  <div class="d-flex align-items-center justify-content-between">
+                      <a href="{{ route('dashboard') }}" class="d-flex align-items-center">
+                          <img src="{{Vite::asset('resources/images/logo.png')}}"  alt="logo" style="height:100px;">
+                      </a>
                   </div>
 
                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into our CRM</h5>

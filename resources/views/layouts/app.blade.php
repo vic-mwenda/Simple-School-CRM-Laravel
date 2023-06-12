@@ -11,6 +11,7 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
   <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -24,12 +25,12 @@
 
   <header id="header" class="header fixed-top d-flex align-items-center">
 
-    <div class="d-flex align-items-center justify-content-between">
+    <div class="logo d-flex align-items-center justify-content-between">
       <a href="{{ route('dashboard') }}" class="d-flex align-items-center">
         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -131,8 +132,9 @@
       <script scr="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/datepicker.min.js"></script>
-
+  <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
 </body>
 
 </html>

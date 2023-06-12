@@ -12,7 +12,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $inquiries = inquiries::paginate(3);
+        $inquiries = inquiries::with('customer', 'user')->paginate(3);
 
         return view('dashboard',compact('inquiries'));
     }

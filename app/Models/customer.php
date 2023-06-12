@@ -24,7 +24,8 @@ class customer extends Model
         'institution_attended',
         'field_of_study',
         'how_did_you_hear',
-        'consent_terms'
+        'consent_terms',
+        'user_id'
     ];
 
 
@@ -32,5 +33,8 @@ class customer extends Model
     {
         return $this->hasMany(inquiries::class);
     }
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
