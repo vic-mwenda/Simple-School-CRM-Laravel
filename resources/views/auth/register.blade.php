@@ -28,9 +28,15 @@
       </div>
 
         <div class="mt-4">
+            <x-input-label for="phone_number" :value="__('Phone number')" />
+            <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="old('phone_number')" required autocomplete="phone_number" />
+            <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
+        </div>
+
+        <div class="mt-4">
             <div class="row">
                 <div class="col-lg-6">
-                    <x-input-label for="email" :value="__('Campus')" />
+                    <x-input-label for="campus" :value="__('Campus')" />
 
                     <select name="campus" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" id="role">
                         <option value="Thika Road Campus">Thika Road Campus</option>
@@ -40,12 +46,13 @@
                     </select>
                 </div>
                 <div class="col-lg-6">
-                    <x-input-label for="email" :value="__('User Role')" />
+                    <x-input-label for="role" :value="__('User Role')" />
 
                     <select name="role" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" id="role">
                         <option value="0">Administrator</option>
-                        <option value="1">User</option>
-                        <option value="2">Viewer</option>
+                        <option value="1">Super User</option>
+                        <option value="2">User</option>
+                        <option value="3">Viewer</option>
                     </select>
                 </div>
             </div>

@@ -20,11 +20,13 @@ Route::get('/', function () {
 
 Route::middleware('role')->group(function () {
     Route::get('/usermanage', [ViewUsersController::class, 'index'])->name('usermanage.index');
+    Route::get('/usermanage/view/{user}', [ViewUsersController::class, 'view'])->name('usermanage.view');
     Route::get('/usermanage/register', [ViewUsersController::class, 'create'])->name('usermanage.create');
     Route::post('/usermanage/store', [ViewUsersController::class, 'store'])->name('usermanage.store');
     Route::get('/usermanage/edit/{user}', [ViewUsersController::class, 'edit'])->name('usermanage.edit');
     Route::post('/usermanage/update/{user}', [ViewUsersController::class, 'update'])->name('usermanage.update');
     Route::delete('/usermanage/{user}', [ViewUsersController::class, 'destroy'])->name('usermanage.destroy');
+    Route::post('/mass-action', [ViewUsersController::class, 'action'])->name('usermanage.action');
 });
 //dashboard access routes
 
@@ -70,6 +72,7 @@ Route::get('/customers',[CustomerManagerController::class,'index'])->name('custo
 Route::get('/customers/{customer}',[CustomerManagerController::class,'view'])->name('customer.view');
 Route::post('/customers/update-table',[CustomerManagerController::class,'filter'])->name('customer.filter');
 Route::post('/customers/bulk-action',[CustomerManagerController::class,'action'])->name('customer.action');
+Route::get('/customers/action/refresh',[CustomerManagerController::class,'refresh'])->name('customer.refresh');
 Route::get('/mycustomers',[CustomerManagerController::class,'getUserCustomers'])->name('mycustomers');
 
 //Course manager

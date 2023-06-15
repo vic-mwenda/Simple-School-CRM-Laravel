@@ -63,6 +63,17 @@ return [
             ]) : [],
         ],
 
+        'students' => [
+            'driver' => 'mysql',
+            'host' => env('STUDENTS_DB_HOST', '127.0.0.1'),
+            'port' => env('STUDENTS_DB_PORT', '3306'),
+            'database' => env('STUDENTS_DB_DATABASE', 'forge'),
+            'username' => env('STUDENTS_DB_USERNAME', 'forge'),
+            'password' => env('STUDENTS_DB_PASSWORD', ''),
+            'unix_socket' => env('STUDENTS_DB_SOCKET', ''),
+
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

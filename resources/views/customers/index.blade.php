@@ -3,14 +3,15 @@
         <h2 class="ml-10 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Manage our Customers') }}
         </h2>
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            {{ __('Get to view and extract relevant customer information') }}
+        </p>
     </x-slot>
 
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {{ __('Get to view and extract relevant customer information') }}
-                </p>
+
             </div>
         </div>
     </div>
@@ -29,7 +30,18 @@
                             <option value="archive">Archive</option>
                         </select>
                         <button type="button" id="applyBulkAction" class="btn btn-primary ml-3">Apply</button>
+                        <a href="{{route('customer.refresh')}}"><button type="button" data-tooltip-target="refresh-btn" class="ml-6 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                            </svg>
+                        </button></a>
+                        <div id="refresh-btn" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            Refresh table
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
                     </div>
+
                     <div>
                         <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
                             <svg class="w-4 h-4 mr-2 text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
@@ -94,7 +106,10 @@
                             Category
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Course of Interest
+                            How they heard about us
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Status
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Action
@@ -123,11 +138,20 @@
                                 {{$customer->how_did_you_hear}}
                             </td>
                             <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    @if($customer->status =="pending" )
+                                    <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div> pending
+                                    @elseif($customer->status =="active")
+                                    <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> active
+                                    @endif
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical" style="font-size: 2rem;"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li><a class="dropdown-item" href="{{route('customer.view',$customer->id)}}"><i class="bi bi-eye-fill"></i> View Inquiry</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('manageinquiry.download',$customer->id)}}"><i class="bi bi-box-arrow-down"></i> Download Inquiry</a></li>
+                                        <li><a class="dropdown-item" href="{{route('customer.view',$customer->id)}}"><i class="bi bi-eye-fill"></i> View Customer Details</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('manageinquiry.download',$customer->id)}}"><i class="bi bi-box-arrow-down"></i> Download Customer Details</a></li>
                                     </ul>
                                 </div>
                             </td>

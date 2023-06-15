@@ -139,8 +139,8 @@
                                         <div class="filter">
                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical" style="font-size: 2rem;"></i></a>
                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                <li><a class="dropdown-item" href="{{route('customer.view',$course->id)}}"><i class="bi bi-eye-fill"></i> View Inquiry</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('manageinquiry.download',$course->id)}}"><i class="bi bi-box-arrow-down"></i> Download Inquiry</a></li>
+                                                <li><a class="dropdown-item" href="{{route('customer.view',$course->id)}}"><i class="bi bi-eye-fill"></i> View Course</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('manageinquiry.download',$course->id)}}"><i class="bi bi-box-arrow-down"></i> Download Course Data</a></li>
                                             </ul>
                                         </div>
                                     </td>

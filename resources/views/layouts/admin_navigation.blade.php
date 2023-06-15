@@ -7,28 +7,49 @@
                 <span>Home</span>
             </a>
         </li>
+
         <li class="nav-item">
-            <a class="nav-link nav-tabs-bordered collapsed" href="{{ route('manageinquiry.index') }}">
-                <i class="bi bi-menu-button-wide"></i><span>Inquiries</span>
-            </a>
-        </li><!-- End Manage Inquiries Nav -->
+            <button type="button" class="nav-link flex items-center w-full p-2 transition duration-75 rounded-lg group" aria-controls="inquiry-dropdown" data-collapse-toggle="inquiry-dropdown">
+                <span class="flex-1 ml-2 text-left whitespace-nowrap" sidebar-toggle-item>
+                    <i class="bi bi-journal-text"></i>Inquiries</span>
+                <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </button>
+            <ul id="inquiry-dropdown" class="hidden py-2 space-y-2">
+                <li>
+                    <a href="{{ route('manageinquiry.index') }}" class="flex nav-link items-center w-full p-2">List Inquiries</a>
+                </li>
+                <li>
+                    <a href="{{ route('manageinquiry.create') }}" class="flex nav-link items-center w-full p-2">Create Inquiry</a>
+                </li>
+
+            </ul>
+        </li>
+       <!-- End Manage Inquiries Nav -->
         <li class="nav-item">
             <a class="nav-link nav-tabs-bordered collapsed" href="{{ route('customers.index') }}">
                 <i class="bi bi-people"></i><span>Customers</span>
             </a>
-        </li><!-- End Manage customers Nav -->
-        <li class="nav-item dropdown">
-            <a class="nav-link nav-tabs-bordered dropdown-toggle" href="#" id="courseDropdown" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false">
-                <i class="bi bi-book"></i> Courses
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="courseDropdown">
-                <li><a class="dropdown-item" href="{{ route('course.index') }}"><i class="bi bi-list"></i> List
-                        Courses</a></li>
-                <li><a class="dropdown-item" href="{{ route('course.create') }}"><i
-                            class="bi bi-plus-circle"></i> Create Course</a></li>
+        </li>
+        <!-- End Manage customers Nav -->
+
+        <li class="nav-item">
+            <button type="button" class="nav-link flex items-center w-full p-2 transition duration-75 rounded-lg group" aria-controls="dropdown-example" data-collapse-toggle="course-dropdown">
+                <span class="flex-1 ml-2 text-left whitespace-nowrap" sidebar-toggle-item>
+                    <i class="bi bi-book"></i> Courses</span>
+                <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </button>
+            <ul id="course-dropdown" class="hidden py-2 space-y-2">
+                <li>
+                    <a href="{{ route('course.index') }}" class="flex nav-link items-center w-full p-2">List Courses</a>
+                </li>
+                <li>
+                    <a href="{{ route('course.create') }}" class="flex nav-link items-center w-full p-2">Create Course</a>
+                </li>
+
             </ul>
-        </li><!-- End Manage courses Nav -->
+        </li>
+        <!-- End Manage course Nav -->
+
         <li class="nav-item">
             <a class="nav-link nav-tabs-bordered collapsed" href="{{ route('insights.index') }}">
                 <i class="bi bi-bar-chart"></i><span>Insights</span>

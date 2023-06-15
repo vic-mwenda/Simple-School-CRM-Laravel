@@ -3,14 +3,15 @@
         <h2 class="ml-3 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Manage our Inquiries') }}
         </h2>
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            {{ __('Get to view and extract relevant data from inquiries') }}
+        </p>
     </x-slot>
 
    <div class="container">
      <div class="row">
      <div class="col-lg-3">
-         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-             {{ __('Get to view and extract relevant data from inquiries') }}
-         </p>
+
      </div>
      <div class="col-lg-3"></div>
      <div class="col-lg-3">

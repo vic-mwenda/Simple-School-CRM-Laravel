@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Students;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\customer;
@@ -21,6 +22,22 @@ class CustomerManagerController extends Controller
         $customers = $user->customers()->paginate(5);
 
         return view('customers.index', ['customers' => $customers]);
+    }
+    public function refresh()
+    {
+        $externalStudents = Students::all();
+
+        foreach ($externalStudents as $externalStudent) {
+
+            $customer = customer::where('email', $externalStudent->email )->first();
+
+            if ($customer) {
+
+                $customer->status = 'active';
+                $customer->save();
+            }
+        }
+        return $this->index();
     }
 
     function view(customer $customer){

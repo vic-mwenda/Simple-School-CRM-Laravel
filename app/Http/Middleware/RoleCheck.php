@@ -18,7 +18,6 @@ class RoleCheck
     {
         if (Auth::check() && $request->user()->role == 0) {
             return $next($request);
-
         }
 
         abort(403, 'Unauthorized');

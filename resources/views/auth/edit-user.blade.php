@@ -27,6 +27,11 @@
         <x-input-error :messages="$errors->get('email')" class="mt-2" />
       </div>
         <div class="mt-4">
+            <x-input-label for="phone_number" :value="__('Phone Number')" />
+            <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" value="{{ $user->phone_number }}" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
+        </div>
+        <div class="mt-4">
             <x-input-label for="role" :value="__('User Role')" />
 
             <select name="role" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" id="role">
@@ -36,6 +41,18 @@
             </select>
 
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
+
+        <div class="mt-4">
+
+            <x-input-label for="campus" :value="__('Campus')" />
+
+            <select name="campus" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" id="role">
+                <option value="Thika Road Campus">Thika Road Campus</option>
+                <option value="Mang'u Campus">Mang'u Campus</option>
+                <option value="Nairobi Campus 1">Nairobi Campus(Pioneer Hse)</option>
+                <option value="Nairobi Campus 2">Nairobi Campus(Stanchart)</option>
+            </select>
         </div>
 
       <div class="flex items-center justify-end mt-4">

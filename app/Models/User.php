@@ -25,7 +25,9 @@ class User extends Authenticatable
         'gauth_id',
         'gauth_type',
         'first_login',
-        'campus'
+        'campus',
+        'phone_number',
+        'last_seen'
     ];
 
     /**
