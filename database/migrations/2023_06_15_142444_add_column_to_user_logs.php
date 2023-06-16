@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('last_seen')->change();
+        Schema::table('user_logs', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->after('id')->nullable();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('user_logs', function (Blueprint $table) {
             //
         });
     }

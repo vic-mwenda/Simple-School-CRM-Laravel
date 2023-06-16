@@ -47,6 +47,7 @@ class AuthenticatedSessionController extends Controller
             $user_log = [
                 'name' => $request->user()->name,
                 'email' => $request->user()->email,
+                'user_id'=>$request->user()->id,
                 'ip' => $ip_address,
                 'mac' => $mac,
 //                'city' => $city,

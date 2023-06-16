@@ -18,13 +18,13 @@
         </li><!-- End Manage Inquiries Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('mycustomers') }}">
+            <a class="nav-link collapsed" href="{{ route('customers.index') }}">
                 <i class="bi bi-people"></i><span>My Customers</span>
             </a>
         </li><!-- End Manage customers Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('myinquiries') }}">
+            <a class="nav-link collapsed" href="{{ route('manageinquiry.index') }}">
                 <i class="bi bi-journal-text"></i><span>My Inquiries</span>
             </a>
 

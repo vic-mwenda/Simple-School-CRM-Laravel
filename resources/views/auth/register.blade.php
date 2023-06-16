@@ -49,10 +49,15 @@
                     <x-input-label for="role" :value="__('User Role')" />
 
                     <select name="role" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" id="role">
+                        @if(Auth::user()->role == 0)
                         <option value="0">Administrator</option>
                         <option value="1">Super User</option>
                         <option value="2">User</option>
                         <option value="3">Viewer</option>
+                        @elseif(Auth::user()->role == 1)
+                        <option value="2">User</option>
+                        <option value="3">Viewer</option>
+                        @endif
                     </select>
                 </div>
             </div>

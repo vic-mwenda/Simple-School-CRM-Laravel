@@ -283,82 +283,61 @@
                     </form>
                 </div>
                 <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="performance" role="tabpanel" aria-labelledby="performance-tab">
-                    <section class="section dashboard">
-                        <div class="row">
-                            <div class="col-lg-12">
 
+                        <div class="row">
                                 <div class="row">
 
-                                    <div class="col-xxl-6 col-xl-12">
-
-                                        <div class="card info-card customers-card">
-
-                                            <div class="filter">
-                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                    <li class="dropdown-header text-start">
-                                                        <h6>Filter</h6>
-                                                    </li>
-
-                                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                                </ul>
+                                    <div class="grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2">
+                                        <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
+                                            <blockquote class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
+                                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Inquiries Handled</h3>
+                                                <p class="my-4">Number of inquiries that our user lodged</p>
+                                            </blockquote>
+                                            <figcaption class="flex items-center justify-center space-x-3">
+                                                <dt class="mb-2 text-3xl font-extrabold">{{$TotalInquiries}}</dt>
+                                            </figcaption>
+                                        </figure>
+                                        <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-tr-lg dark:bg-gray-800 dark:border-gray-700">
+                                            <blockquote class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
+                                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Customers Handled</h3>
+                                                <p class="my-4">Number of customers that our user handled</p>
+                                            </blockquote>
+                                            <figcaption class="flex items-center justify-center space-x-3">
+                                                <dt class="mb-2 text-3xl font-extrabold">{{$totalCustomers}}</dt>
+                                            </figcaption>
+                                        </figure>
+                                        <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-bl-lg md:border-b-0 md:border-r dark:bg-gray-800 dark:border-gray-700">
+                                            <blockquote class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
+                                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Conversion Rate</h3>
+                                                <p class="my-4">Understand the rate of conversion for our users</p>
+                                            </blockquote>
+                                            <figcaption class="flex items-center justify-center space-x-3">
+                                                <dt class="mb-2 text-3xl font-extrabold">{{$ConversionRate}}%</dt>
+                                            </figcaption>
+                                            <div class="flex items-center w-50 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                                                <div class="bg-black h-2.5 rounded-full" style="width:{{$ConversionRate}}%"></div>
                                             </div>
+                                        </figure>
+                                        <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-gray-200 rounded-b-lg md:rounded-br-lg dark:bg-gray-800 dark:border-gray-700">
+                                            <blockquote class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
+                                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Goals</h3>
+                                                <p class="my-4">This is the target achievement rate set by our system</p>
+                                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Target:{{$TargetRate->rate}}%</h3>
 
-                                            <div class="card-body">
-                                                <h5 class="card-title">Total Inquiries Received <span>| This Year</span></h5>
+                                            </blockquote>
+                                            <figcaption class="flex items-center justify-center space-x-3">
+                                                <dt class="mb-2 text-3xl font-extrabold">{{$TotalConversions}}/ {{$TargetCustomers}}</dt>
+                                            </figcaption>
 
-                                                <div class="d-flex align-items-center">
-                                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                        <i class="bi bi-people"></i>
-                                                    </div>
-                                                    <div class="ps-3">
-                                                        <h6>{{$TotalInquiries}}</h6>
-{{--                                                        <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>--}}
-
-                                                    </div>
-                                                </div>
-
+                                            exit<div class="w-50 bg-gray-200 rounded-full dark:bg-gray-700">
+                                                <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: {{$ConversionRate}}%"> {{$ConversionRate}}</div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-6 col-xl-12">
-
-                                        <div class="card info-card customers-card">
-
-                                            <div class="filter">
-                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                    <li class="dropdown-header text-start">
-                                                        <h6>Filter</h6>
-                                                    </li>
-
-                                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="card-body">
-                                                <h5 class="card-title">Converted Inquiries <span>| This Year</span></h5>
-
-                                                <div class="d-flex align-items-center">
-                                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                        <i class="bi bi-people"></i>
-                                                    </div>
-                                                    <div class="ps-3">
-                                                        <h6>{{$TotalConversions}}</h6>
-{{--                                                        <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>--}}
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
+                                        </figure>
                                     </div>
 
-
-                                    <!-- Reports -->
+                                </div>
+                                    <!-- Line Graph-->
+                               <div class="row">
                                     <div class="col-12">
                                         <div class="filter">
                                             <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -378,11 +357,10 @@
                                             <canvas id="userChart" class="rounded shadow"></canvas>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                               </div>
                         </div>
 
-                    </section>
+                    </>
                     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
                     <script>

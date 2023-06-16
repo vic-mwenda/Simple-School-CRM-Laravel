@@ -23,33 +23,56 @@ class EnquiryManagerController extends Controller
      */
     public function index()
     {
+        $current_user=Auth::user();
+        if ($current_user->role == '0'||$current_user->role == '3'){
+
         $inquiries = inquiries::with('customer', 'user')->get();
-
         return view('Inquiries.ManageInquiry',['inquiries' => $inquiries]);
-    }
-    /**
-     * Display a listing of the inquiries made by a user.
-     */
-    public function getUserInquiries()
-    {
-        $user = auth()->user();
-        $inquiries = inquiries::where('user_id', $user->id)->get();
 
-        return view('Inquiries.ManageInquiry', ['inquiries' => $inquiries]);
-    }
+        }elseif ($current_user->role == '1'){
+            $campus = $current_user->campus;
+            $inquiries = inquiries::whereHas('user', function ($query) use ($campus) {
+                $query->where('campus', $campus);
+            })->with('customer', 'user')->get();
+            return view('Inquiries.ManageInquiry',['inquiries' => $inquiries]);
+        }else{
+            $currentUserId = Auth::id();
 
+            $inquiries = inquiries::whereHas('user', function ($query) use ($currentUserId) {
+                $query->where('id', $currentUserId);
+            })->with('customer', 'user')->get();
+            return view('Inquiries.ManageInquiry',['inquiries' => $inquiries]);
+        }
+    }
     /**
      * Filter our tables
      */
-    public function filter(Request $request){
+    public function filter(Request $request)
+    {
+        $current_user = Auth::user();
+
+        if ($current_user->role == '0' || $current_user->role == '3') {
+            $inquiries = inquiries::with('customer', 'user')->get();
+        } elseif ($current_user->role == '1') {
+            $campus = $current_user->campus;
+            $inquiries = inquiries::whereHas('user', function ($query) use ($campus) {
+                $query->where('campus', $campus);
+            })->with('customer', 'user')->get();
+        } else {
+            $currentUserId = Auth::id();
+            $inquiries = inquiries::whereHas('user', function ($query) use ($currentUserId) {
+                $query->where('id', $currentUserId);
+            })->with('customer', 'user')->get();
+        }
 
         $days = $request->input('days');
-        $inquiries = inquiries::with('customer', 'user')
-            ->whereDate('created_at', '>=', now()->subDays($days))
-            ->get();
 
-        // Return the updated table data as a JSON response
-        return response()->json(['inquiries' => $inquiries]);
+        $filteredInquiries = $inquiries->filter(function ($inquiry) use ($days) {
+            return $inquiry->created_at->gte(now()->subDays($days));
+        });
+
+        // Return the filtered inquiries
+        return response()->json(['inquiries' => $filteredInquiries]);
     }
     /**
      * Handle bulk actions

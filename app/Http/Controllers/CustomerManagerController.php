@@ -7,22 +7,28 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\customer;
 use App\Models\inquiries;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerManagerController extends Controller
 {
-    function index(){
-        $customers =customer::paginate(5);
-        return view('customers.index',compact('customers'));
-    }
-
-    public function getUserCustomers()
+    public function index()
     {
-        $user = auth()->user();
+        $current_user = Auth::user();
 
-        $customers = $user->customers()->paginate(5);
+        if ($current_user->role == '0' || $current_user->role == '3') {
+            $customers = customer::paginate(5);
+        } elseif ($current_user->role == '1') {
 
-        return view('customers.index', ['customers' => $customers]);
+            $customers = customer::whereHas('user', function ($query) use ($current_user) {
+                $query->where('campus', $current_user->campus);
+            })->paginate(5);
+        } else {
+            $customers = customer::where('user_id', $current_user->id)->paginate(5);
+        }
+
+        return view('customers.index', compact('customers'));
     }
+
     public function refresh()
     {
         $externalStudents = Students::all();
@@ -44,15 +50,34 @@ class CustomerManagerController extends Controller
         $inquiries = $customer->inquiries;
         return view('customers.view', ['customers' => $customer],compact('inquiries'));
     }
-    public function filter(Request $request){
+
+    public function filter(Request $request)
+    {
+        $current_user = Auth::user();
+
+        if ($current_user->role == '0' || $current_user->role == '3') {
+            $customers = customer::paginate(5);
+        } elseif ($current_user->role == '1') {
+            $campus = $current_user->campus;
+            $customers = customer::whereHas('user', function ($query) use ($campus) {
+                $query->where('campus', $campus);
+            })->paginate(5);
+        } else {
+            $currentUserId = Auth::id();
+            $customers = customer::where('user_id', $currentUserId)->paginate(5);
+        }
 
         $days = $request->input('days');
-        $customers = customer::whereDate('created_at', '>=', now()->subDays($days))
-            ->get();
 
-        // Return the updated table data as a JSON response
-        return response()->json(['customers' => $customers]);
+        $filteredCustomers = $customers->filter(function ($customer) use ($days) {
+            return $customer->created_at->gte(now()->subDays($days));
+        });
+
+        // Return the filtered customers
+        return response()->json(['customers' => $filteredCustomers]);
     }
+
+
     /**
      * Handle bulk actions
      */

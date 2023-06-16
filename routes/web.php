@@ -9,6 +9,7 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\InsightsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomerManagerController;
+use App\Http\Controllers\TargetController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,7 +19,7 @@ Route::get('/', function () {
 
 //user management routes
 
-Route::middleware('role')->group(function () {
+Route::middleware('role:0,1')->group(function () {
     Route::get('/usermanage', [ViewUsersController::class, 'index'])->name('usermanage.index');
     Route::get('/usermanage/view/{user}', [ViewUsersController::class, 'view'])->name('usermanage.view');
     Route::get('/usermanage/register', [ViewUsersController::class, 'create'])->name('usermanage.create');
@@ -27,6 +28,18 @@ Route::middleware('role')->group(function () {
     Route::post('/usermanage/update/{user}', [ViewUsersController::class, 'update'])->name('usermanage.update');
     Route::delete('/usermanage/{user}', [ViewUsersController::class, 'destroy'])->name('usermanage.destroy');
     Route::post('/mass-action', [ViewUsersController::class, 'action'])->name('usermanage.action');
+
+    //Logging routes
+    Route::get('/logger',[UserLoggerController::class,'index'])->name('logger.index');
+
+    //Course manager
+    Route::get('/courses',[CourseManagerController::class,'index'])->name('course.index');
+    Route::get('/courses/create',[CourseManagerController::class,'create'])->name('course.create');
+    Route::post('/courses/store',[CourseManagerController::class,'store'])->name('course.store');
+
+    //Target manager
+    Route::post('/target',[TargetController::class,'store'])->name('targets.store');
+    Route::get('/target/view/{user}',[TargetController::class,'view'])->name('targets.view');
 });
 //dashboard access routes
 
@@ -54,18 +67,13 @@ Route::get('/get-states',[EnquiryManagerController::class,'states'])->name('mana
 Route::post('/update-table',[EnquiryManagerController::class,'filter'])->name('manageinquiry.filter');
 Route::post('/bulk-action',[EnquiryManagerController::class,'action'])->name('manageinquiry.action');
 
-
-//Logging routes
-
-Route::get('/logger',[UserLoggerController::class,'index'])->middleware('role')->name('logger.index');
-
 //OAUTH2 google login
 
 Route::get('auth/google', [GoogleAuthController::class, 'signInwithGoogle'])->name('google.login');
 Route::get('callback/google', [GoogleAuthController::class, 'callbackToGoogle']);
 
 // Insights module
-Route::get('/insights',[InsightsController::class,'Show'])->middleware('role')->name('insights.index');
+Route::get('/insights',[InsightsController::class,'Show'])->middleware('role:0,1')->name('insights.index');
 
 //customer manager
 Route::get('/customers',[CustomerManagerController::class,'index'])->name('customers.index');
@@ -75,8 +83,4 @@ Route::post('/customers/bulk-action',[CustomerManagerController::class,'action']
 Route::get('/customers/action/refresh',[CustomerManagerController::class,'refresh'])->name('customer.refresh');
 Route::get('/mycustomers',[CustomerManagerController::class,'getUserCustomers'])->name('mycustomers');
 
-//Course manager
-Route::get('/courses',[CourseManagerController::class,'index'])->name('course.index');
-Route::get('/courses/create',[CourseManagerController::class,'create'])->name('course.create');
-Route::post('/courses/store',[CourseManagerController::class,'store'])->name('course.store');
 

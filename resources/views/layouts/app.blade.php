@@ -90,9 +90,9 @@
 
 
 
-  @if(Auth::user()->role == 0)
+  @if(Auth::user()->role == 0||Auth::user()->role == 1)
       @include('layouts.admin_navigation')
-  @elseif(Auth::user()->role == 1)
+  @elseif(Auth::user()->role == 2)
       @include('layouts.user_navigation')
   @else
       @include('layouts.viewer_navigation')

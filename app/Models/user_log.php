@@ -11,10 +11,15 @@ class user_log extends Model
     //mass assignable attributes
     protected $fillable = [
         'name',
+        'user_id',
         'email',
         'ip',
         'mac',
         'city',
         'created_at'
     ];
+    public function User()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chart;
 use App\Models\customer;
 use App\Models\inquiries;
+use App\Models\user_targets;
 use Illuminate\Http\Request;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -14,20 +15,69 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
 class ViewUsersController extends Controller
 {
+
+    function getTargetRateForUser($userId)
+    {
+        $target = user_targets::where('user_id', $userId)->first();
+
+        if (!$target) {
+            return null;
+        }
+
+        $predefinedRate = $target->rate;
+
+        $totalCustomers = customer::where('user_id', $userId)->count();
+        $targetCustomers = ceil(($predefinedRate / 100) * $totalCustomers);
+
+        return $targetCustomers;
+    }
+
+    /**
+     * Calculate the conversion rate for our users
+     */
+    public function calculateConversionRate($userId)
+    {
+        $totalCustomers = customer::where('user_id', $userId)->count();
+
+        $convertedCustomers = customer::where('user_id', $userId)
+            ->where('status', 'active')
+            ->count();
+
+        if ($totalCustomers > 0) {
+            $conversionRate = round($convertedCustomers / $totalCustomers* 100,1) ;
+        } else {
+            $conversionRate = 0;
+        }
+
+        return $conversionRate;
+    }
+
     /**
      * Display a listing of all the users
      */
     public function index()
     {
-        $users = User::withCount('customers')->paginate(5);
-        $title = 'Delete User!';
-        $text = "Are you sure you want to delete?";
-        confirmDelete($title, $text);
+        $current_user = Auth::user();
+
+        if ($current_user->role == '0' || $current_user->role == '3') {
+            $users = User::withCount('customers')->paginate(5);
+        } elseif ($current_user->role == '1') {
+            $campus = $current_user->campus;
+            $users = User::where('campus', $campus)
+                ->withCount('customers')
+                ->paginate(5);
+        } else {
+            $currentUserId = Auth::id();
+            $users = User::where('id', $currentUserId)
+                ->withCount('customers')
+                ->paginate(5);
+        }
 
         return view('users.ManageUser', compact('users'));
     }
@@ -41,9 +91,14 @@ class ViewUsersController extends Controller
         $inquiries = User::with('inquiries')->find($user->id);
         $customers = User::with('customers')->find($user->id);
         $TotalInquiries = inquiries::where('user_id', $user->id)->count();
+        $totalCustomers = customer::where('user_id', $user->id)->count();
         $TotalConversions = customer::where('user_id', $user->id)
             ->where('status', 'active')
             ->count();
+
+        $ConversionRate = $this->calculateConversionRate($user->id);
+        $TargetCustomers = $this->getTargetRateForUser($user->id);
+        $TargetRate = user_targets::where('user_id',$user->id)->select('rate')->first();
 
 
         $start = '2023-01-01'; // To be replaced with the desired start date gotten from UI
@@ -61,7 +116,7 @@ class ViewUsersController extends Controller
         $chart->dataset = $results->pluck('y')->toArray();
         $chart->colours = ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'];
 
-        return view('users.view',compact('userdata','customers','inquiries','chart','TotalInquiries','TotalConversions'));
+        return view('users.view',compact('userdata','TargetRate','TargetCustomers','totalCustomers','customers','ConversionRate','inquiries','chart','TotalInquiries','TotalConversions'));
     }
     /**
      * Show the form for creating a new user.

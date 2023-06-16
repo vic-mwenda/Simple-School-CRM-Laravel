@@ -2,63 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Models\user_targets;
 
 class TargetController extends Controller
 {
+
+    public function view(User $user){
+        return view('users.target',['user' => $user]);
+    }
     /**
-     * Display a listing of the resource.
+     * Store a new target in storage.
      */
-    public function index()
+    public function store(Request $request):RedirectResponse
     {
-        //
+        $validatedData = $request->validate([
+            'rate' => 'required|numeric|min:0|max:100',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+        ]);
+
+        $target= [
+            'user_id' => $request->input('user_id'),
+            'rate' =>$validatedData['rate'] ,
+            'start_date' =>  $validatedData['start_date'],
+            'end_date' => $validatedData['end_date'],
+
+        ];
+        user_targets::create($target);
+
+        toast('User Target has been set successfully.', 'success');
+
+        return redirect()->route('dashboard');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
