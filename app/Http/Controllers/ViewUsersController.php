@@ -138,6 +138,9 @@ class ViewUsersController extends Controller
             'phone_number' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/','min:10','unique:'.User::class],
         ]);
 
+        $current_user = Auth::user();
+
+        if ($current_user->role == '0') {
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -145,7 +148,27 @@ class ViewUsersController extends Controller
             'role'=> $request->role,
             'campus'=> $request->campus,
             'password' => Hash::make('zetech123'),
-        ]);
+        ]);}
+        else{
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'role'=> $request->role,
+                'campus'=> $current_user->campus,
+                'password' => Hash::make('zetech123'),
+            ]);
+        }
+
+
+        $user_targets =[
+            'user_id'=> $user->id,
+            'rate'=> 50.00,
+            'start_date'=> '2023-06-13',
+            'end_date'=>'2023-06-30'
+        ];
+
+        user_targets::create($user_targets);
 
         event(new Registered($user));
 

@@ -35,6 +35,7 @@
 
         <div class="mt-4">
             <div class="row">
+                @if(Auth::user()->role == 0)
                 <div class="col-lg-6">
                     <x-input-label for="campus" :value="__('Campus')" />
 
@@ -45,6 +46,8 @@
                         <option value="Nairobi Campus 2">Nairobi Campus(Stanchart)</option>
                     </select>
                 </div>
+                @endif
+
                 <div class="col-lg-6">
                     <x-input-label for="role" :value="__('User Role')" />
 

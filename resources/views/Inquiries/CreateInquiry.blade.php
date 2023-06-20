@@ -37,9 +37,15 @@
                                 <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                             </div>
                             <div class="form-group">
-                                <label style="font-weight: bold;padding-top: 10px;" for="dob">Date of Birth</label>
-                                <input type="date" class="form-control" name="date_of_birth" id="dob">
-                                <x-input-error :messages="$errors->get('date_of_birth')" class="mt-2" />
+                                <label style="font-weight: bold;padding-top: 10px;" for="dob">Age Group</label>
+                                <select class="form-control" id="agrp" name="age_group">
+                                    <option value="Between 10-20">Between 10-20</option>
+                                    <option value="Between 21-30">Between 21-30</option>
+                                    <option value="Between 31-40">Between 31-40</option>
+                                    <option value="Between 31-40">Between 31-40</option>
+                                    <option value="Above 40">Above 40</option>
+                                </select>
+                                <x-input-error :messages="$errors->get('age_group')" class="mt-2" />
                             </div>
                             <div class="form-group">
                                 <label style="font-weight: bold;padding-top: 10px;" for="gender">Gender<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
@@ -51,7 +57,7 @@
                                 <x-input-error :messages="$errors->get('gender')" class="mt-2" />
                             </div>
                     </div>
-                                <div class="col-md-6">
+                        <div class="col-md-6">
                                     <div class="form-group">
                                         <label style="font-weight: bold;padding-top: 10px;" for="country"><i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i>Country</label>
                                         <select class="form-control" name="country">
@@ -79,7 +85,7 @@
                                         <x-input-error :messages="$errors->get('postal_code')" class="mt-2" />
                                     </div>
                                   </div>
-                            </div>
+                    </div>
                     <div class="d-flex justify-content-center bg-[#012970] align-items-center mt-6">
                         <h3 style="color: white;padding-top: 7px;font-size: 22px;font-weight: bold;">2. Inquiry Details</h3>
                     </div>
@@ -161,7 +167,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="form-group pt-2">
                                 <label class="fw-bold" for="institutionAttended">Current or Last Institution Attended</label>
@@ -183,11 +188,10 @@
                         </div>
                     </div>
                     <div class="form-group pt-4 d-flex justify-content-center ">
-                        <label class="fw-bold" for="consentTerms">I agree to receiving updates on new courses and offers:</label>
                         <input type="checkbox" class="form-check-input" id="consentTerms" name="consent_terms" value=1 checked>
+                        <label class="fw-bold" for="consentTerms">I agree to receiving updates on new courses and offers:</label>
                         <x-input-error :messages="$errors->get('consent_terms')" class="mt-2" />
                     </div>
-
                     <div class="d-flex justify-content-center pt-6">
                         <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Submit <i style="font-size: 15px;color: white;" class="bi bi-send-plus"></i></button>
                         <button type="reset" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Reset <i style="font-size: 15px;color: white;" class="bi bi-arrow-repeat"></i></button>

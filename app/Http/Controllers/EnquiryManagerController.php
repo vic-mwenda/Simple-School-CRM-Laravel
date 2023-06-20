@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
-use Barryvdh\DomPDF\PDF;
-use Dompdf\Dompdf;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\Config\Repository;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PragmaRX\Countries\Package\Countries;
 use App\Models\inquiries;
 use App\Models\customer;
@@ -24,25 +22,25 @@ class EnquiryManagerController extends Controller
     public function index()
     {
         $current_user=Auth::user();
+
         if ($current_user->role == '0'||$current_user->role == '3'){
-
         $inquiries = inquiries::with('customer', 'user')->get();
-        return view('Inquiries.ManageInquiry',['inquiries' => $inquiries]);
-
         }elseif ($current_user->role == '1'){
             $campus = $current_user->campus;
             $inquiries = inquiries::whereHas('user', function ($query) use ($campus) {
                 $query->where('campus', $campus);
             })->with('customer', 'user')->get();
-            return view('Inquiries.ManageInquiry',['inquiries' => $inquiries]);
         }else{
             $currentUserId = Auth::id();
 
             $inquiries = inquiries::whereHas('user', function ($query) use ($currentUserId) {
                 $query->where('id', $currentUserId);
             })->with('customer', 'user')->get();
-            return view('Inquiries.ManageInquiry',['inquiries' => $inquiries]);
         }
+        $inquiriesCount = inquiries::where('user_id',$current_user->id)->count();
+
+        return view('Inquiries.ManageInquiry',['inquiries' => $inquiries],compact('inquiriesCount'));
+
     }
     /**
      * Filter our tables
@@ -124,7 +122,7 @@ class EnquiryManagerController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => 'required|email',
             'phone' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/','min:10'],
-            'date_of_birth' => 'nullable|date',
+            'age_group' => 'nullable|string',
             'gender' => 'required',
             'country' => ['required', 'string'],
             'state' => 'nullable',
@@ -152,7 +150,7 @@ class EnquiryManagerController extends Controller
                 'state' => $request->input('state'),
                 'city' => $request->input('town'),
                 'postal_code' => $request->input('postal_code'),
-                'date_of_birth' => $request->input('date_of_birth'),
+                'date_of_birth' => $request->input('age_group'),
                 'gender' => $request->input('gender'),
                 'education_level' => $request->input('education_level'),
                 'institution_attended' => $request->input('institution_attended'),
@@ -187,32 +185,60 @@ class EnquiryManagerController extends Controller
     }
 
     /**
-     * Print a list of all resources.
+     * Export a spreadsheet of all inquiries.
      */
-    public function print(){
-        $dompdf = new Dompdf();
-        $files = new Filesystem();
-        $options = app(Repository::class);
-        $view = app(Factory::class);
-        $pdf= new PDF($dompdf,$options,$files,$view);
-        $inquiries = inquiries::all();
-        $pdf->loadView('Inquiries.pdf.AllInquiries',compact('inquiries'));
-        return $pdf->download('inquiries.pdf');
-    }
+   public function export($inquiry_data){
+       ini_set('max_execution_time', 0);
+       ini_set('memory_limit', '4000M');
+       try {
+           $spreadSheet = new Spreadsheet();
+           $spreadSheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
+           $spreadSheet->getActiveSheet()->fromArray($inquiry_data);
+           $Excel_writer = new Xls($spreadSheet);
+           header('Content-Type: application/vnd.ms-excel');
+           header('Content-Disposition: attachment;filename="Customer_ExportedData.xls"');
+           header('Cache-Control: max-age=0');
+           ob_end_clean();
+           $Excel_writer->save('php://output');
+           exit();
+       } catch (Exception $e) {
+           return;
+       }
 
-    /**
-     * Download a specified resource.
-     */
-    public function download(inquiries $inquiry){
-        $dompdf = new Dompdf();
-        $files = new Filesystem();
-        $options = app(Repository::class);
-        $view = app(Factory::class);
-        $pdf= new PDF($dompdf,$options,$files,$view);
-        $data= ['inquiries' => $inquiry];
-        $pdf->loadView('Inquiries.pdf.inquirypdf',$data);
-        return $pdf->download('inquiry.pdf');
-    }
+   }
 
+   public function exportData(){
+    $current_user= Auth::user();
+    $currentUserId = Auth::id();
 
+       if ($current_user->role == '0'||$current_user->role == '3'){
+           $inquiries = inquiries::with('customer', 'user')->get();
+       }elseif ($current_user->role == '1'){
+           $campus = $current_user->campus;
+           $inquiries = inquiries::whereHas('user', function ($query) use ($campus) {
+               $query->where('campus', $campus);
+           })->with('customer', 'user')->get();
+       }else{
+           $currentUserId = Auth::id();
+
+           $inquiries = inquiries::whereHas('user', function ($query) use ($currentUserId) {
+               $query->where('id', $currentUserId);
+           })->with('customer', 'user')->get();
+       }
+
+       $data_array [] = array("CustomerName","Email","CourseName","Message","Status","Location",'User');
+       foreach($inquiries as $inquiry)
+       {
+           $data_array[] = array(
+               'CustomerName' =>$inquiry->customer->name,
+               'Email' => $inquiry->customer->email,
+               'CourseName' => $inquiry->course_name,
+               'Message' => $inquiry->message,
+               'Status' => $inquiry->customer->status,
+               'Location' =>$inquiry->user->campus,
+               'User'=>$inquiry->user->name
+           );
+       }
+       $this->export($data_array);
+   }
 }

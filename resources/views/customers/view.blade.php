@@ -123,7 +123,7 @@
                                     {{$inquiry->created_at}}
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{'location-x'}}
+                                    {{$user->campus}}
                                 </td>
                                 <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
                                     {{$inquiry->course_name}}

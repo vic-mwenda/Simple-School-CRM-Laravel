@@ -40,8 +40,13 @@ Route::middleware('role:0,1')->group(function () {
     //Target manager
     Route::post('/target',[TargetController::class,'store'])->name('targets.store');
     Route::get('/target/view/{user}',[TargetController::class,'view'])->name('targets.view');
+
+    //export functionality
 });
 //dashboard access routes
+Route::get('export',[EnquiryManagerController::class,'exportData'])->middleware(['auth', 'verified'])->name('export.sheet');
+Route::get('export/customers',[CustomerManagerController::class,'exportData'])->middleware(['auth', 'verified'])->name('export.customers');
+
 
 Route::get('/dashboard', [DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 

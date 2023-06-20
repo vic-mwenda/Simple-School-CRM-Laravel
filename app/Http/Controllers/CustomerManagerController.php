@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\customer;
 use App\Models\inquiries;
 use Illuminate\Support\Facades\Auth;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class CustomerManagerController extends Controller
 {
@@ -26,7 +29,9 @@ class CustomerManagerController extends Controller
             $customers = customer::where('user_id', $current_user->id)->paginate(5);
         }
 
-        return view('customers.index', compact('customers'));
+        $customerCount = customer::where('user_id',$current_user->id)->count();
+
+        return view('customers.index', compact('customers','customerCount'));
     }
 
     public function refresh()
@@ -48,7 +53,8 @@ class CustomerManagerController extends Controller
 
     function view(customer $customer){
         $inquiries = $customer->inquiries;
-        return view('customers.view', ['customers' => $customer],compact('inquiries'));
+        $user = $customer->user;
+        return view('customers.view', ['customers' => $customer],compact('inquiries','user'));
     }
 
     public function filter(Request $request)
@@ -91,5 +97,55 @@ class CustomerManagerController extends Controller
         }
 
         return $this->getUserCustomers();
+    }
+
+    public function export($customer_data){
+        ini_set('max_execution_time', 0);
+        ini_set('memory_limit', '4000M');
+        try {
+            $spreadSheet = new Spreadsheet();
+            $spreadSheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
+            $spreadSheet->getActiveSheet()->fromArray($customer_data);
+            $Excel_writer = new Xls($spreadSheet);
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="Customer_ExportedData.xls"');
+            header('Cache-Control: max-age=0');
+            ob_end_clean();
+            $Excel_writer->save('php://output');
+            exit();
+        } catch (Exception $e) {
+            return;
+        }
+
+    }
+
+    public function exportData(){
+        $current_user= Auth::user();
+        $currentUserId = Auth::id();
+        if ($current_user->role == '0' || $current_user->role == '3') {
+            $customers = customer::all();
+        } elseif ($current_user->role == '1') {
+            $customers = customer::whereHas('user', function ($query) use ($current_user) {
+                $query->where('campus', $current_user->campus);
+            })->get();
+        } else {
+            $customers = customer::where('user_id', $currentUserId)->get();
+        }
+
+        $data_array [] = array("CustomerName","Email","Phone Number","CourseName","How did they hear about us","Gender","Status","Date of Inquiry");
+        foreach($customers as $customer)
+        {
+            $data_array[] = array(
+                'CustomerName' =>$customer->name,
+                'Email' => $customer->email,
+                'Phone Number' => $customer->phone,
+                'CourseName' => $customer->education_level,
+                'How did they hear about us' => $customer->how_did_you_hear,
+                'Gender' => $customer->gender,
+                'Status' => $customer->status,
+                'Date of Inquiry'=>$customer->created_at
+            );
+        }
+        $this->export($data_array);
     }
 }

@@ -14,11 +14,8 @@
 
      </div>
      <div class="col-lg-3"></div>
-     <div class="col-lg-3">
-         <a href="{{route('manageinquiry.print')}}">
-             <x-primary-button><i class="bi bi-printer" style="font-size:20px;padding-right: 5px;"></i> {{ __('Print All Inquiries') }}</x-primary-button>
-         </a>
-     </div>
+     <div class="col-lg-3"></div>
+
         <div class="col-lg-3 pb-4">
         <a href="{{route('manageinquiry.create')}}">
                <x-primary-button><i class="bi bi-pencil-square" style="font-size:20px;padding-right: 5px;"></i>{{ __('Create Inquiry') }}</x-primary-button>
@@ -41,6 +38,13 @@
                             <option value="archive">Archive</option>
                         </select>
                         <button type="button" id="applyBulkAction" class="btn btn-primary ml-3">Apply</button>
+                        <a href="{{route('export.sheet')}}"><button type="button" data-tooltip-target="print-btn" class="ml-6 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
+                                <i class="bi bi-printer" style="font-size:20px;padding-right: 5px;"></i>
+                            </button></a>
+                        <div id="print-btn" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            Print
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
                     </div>
                     <div>
                         <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
@@ -155,6 +159,7 @@
 
 </x-app-layout>
 
+@if($inquiriesCount>0)
 <script>
     const filterRadioInputs = document.querySelectorAll('input[name="filter-radio"]');
 
@@ -228,6 +233,7 @@
     }
 
 </script>
+@endif
 <script>
 
     $(document).ready(function() {
