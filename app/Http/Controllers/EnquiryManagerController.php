@@ -7,8 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use Vonage\SMS\Message\SMS;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use App\Notifications\CreateInquirySMSNotification;
+use App\Notifications\CreateInquiryEmailNotification;
+use Illuminate\Support\Facades\Notification;
 use PragmaRX\Countries\Package\Countries;
+use Vonage;
 use App\Models\inquiries;
 use App\Models\customer;
 use Illuminate\Http\RedirectResponse;
@@ -24,18 +29,18 @@ class EnquiryManagerController extends Controller
         $current_user=Auth::user();
 
         if ($current_user->role == '0'||$current_user->role == '3'){
-        $inquiries = inquiries::with('customer', 'user')->get();
+        $inquiries = inquiries::with('customer', 'user')->paginate(10);
         }elseif ($current_user->role == '1'){
             $campus = $current_user->campus;
             $inquiries = inquiries::whereHas('user', function ($query) use ($campus) {
                 $query->where('campus', $campus);
-            })->with('customer', 'user')->get();
+            })->with('customer', 'user')->paginate(10);
         }else{
             $currentUserId = Auth::id();
 
             $inquiries = inquiries::whereHas('user', function ($query) use ($currentUserId) {
                 $query->where('id', $currentUserId);
-            })->with('customer', 'user')->get();
+            })->with('customer', 'user')->paginate(10);
         }
         $inquiriesCount = inquiries::where('user_id',$current_user->id)->count();
 
@@ -111,7 +116,6 @@ class EnquiryManagerController extends Controller
         ]);
     }
 
-
     /**
      * Store a newly created inquiry in storage.
      */
@@ -170,10 +174,13 @@ class EnquiryManagerController extends Controller
         ];
         inquiries::create($inquiries);
 
+        Notification::send($customer, new CreateInquirySMSNotification());
+        Notification::send($customer,new CreateInquiryEmailNotification());
 
         toast('Customer data and inquiry have been saved successfully.', 'success');
 
         return redirect()->route('manageinquiry.create');
+
     }
     /**
      * Display the specified resource.
@@ -196,7 +203,7 @@ class EnquiryManagerController extends Controller
            $spreadSheet->getActiveSheet()->fromArray($inquiry_data);
            $Excel_writer = new Xls($spreadSheet);
            header('Content-Type: application/vnd.ms-excel');
-           header('Content-Disposition: attachment;filename="Customer_ExportedData.xls"');
+           header('Content-Disposition: attachment;filename="Inquiries_ExportedData.xls"');
            header('Cache-Control: max-age=0');
            ob_end_clean();
            $Excel_writer->save('php://output');
@@ -226,17 +233,18 @@ class EnquiryManagerController extends Controller
            })->with('customer', 'user')->get();
        }
 
-       $data_array [] = array("CustomerName","Email","CourseName","Message","Status","Location",'User');
+       $data_array [] = array("CustomerName","Email","CourseName","Message","Status","Location",'User','Date of Inquiry');
        foreach($inquiries as $inquiry)
        {
            $data_array[] = array(
-               'CustomerName' =>$inquiry->customer->name,
-               'Email' => $inquiry->customer->email,
+               'CustomerName' =>$inquiry->customer?->name,
+               'Email' => $inquiry->customer?->email,
                'CourseName' => $inquiry->course_name,
                'Message' => $inquiry->message,
-               'Status' => $inquiry->customer->status,
-               'Location' =>$inquiry->user->campus,
-               'User'=>$inquiry->user->name
+               'Status' => $inquiry->customer?->status,
+               'Location' =>$inquiry->user?->campus,
+               'User'=>$inquiry->user->name,
+               'Date of Inquiry'=>$inquiry->created_at
            );
        }
        $this->export($data_array);

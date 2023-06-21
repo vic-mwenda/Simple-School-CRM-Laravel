@@ -4,8 +4,8 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\VonageMessage;
 
 class CreateInquirySMSNotification extends Notification implements ShouldQueue
 {
@@ -13,6 +13,8 @@ class CreateInquirySMSNotification extends Notification implements ShouldQueue
 
     /**
      * Create a new notification instance.
+     *
+     * @return void
      */
     public function __construct()
     {
@@ -22,34 +24,24 @@ class CreateInquirySMSNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @return array<int, string>
+     * @param  mixed  $notifiable
+     * @return array
      */
-    public function via(object $notifiable): array
+    public function via(object $notifiable)
     {
-        return [SmsChannel::class];
+        return ['vonage'];
     }
 
     /**
-     * Get the mail representation of the notification.
-     */
-    public function toSms($notifiable)
-    {
-
-        return (new SmsMessage)
-            ->from('Zetech CRM')
-            ->to($notifiable->telephone)
-            ->line("We have successfully received your inquiry.");
-    }
-
-    /**
-     * Get the array representation of the notification.
+     * Get the Vonage / SMS representation of the notification.
      *
-     * @return array<string, mixed>
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\VonageMessage
      */
-    public function toArray(object $notifiable): array
+    public function toVonage(object $notifiable):VonageMessage
     {
-        return [
-            //
-        ];
+        return (new VonageMessage)->content('We have received your inquiry');
     }
+
+
 }

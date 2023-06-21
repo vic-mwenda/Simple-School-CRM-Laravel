@@ -108,7 +108,7 @@ class CustomerManagerController extends Controller
             $spreadSheet->getActiveSheet()->fromArray($customer_data);
             $Excel_writer = new Xls($spreadSheet);
             header('Content-Type: application/vnd.ms-excel');
-            header('Content-Disposition: attachment;filename="Customer_ExportedData.xls"');
+            header('Content-Disposition: attachment;filename="Customer_Data.xls"');
             header('Cache-Control: max-age=0');
             ob_end_clean();
             $Excel_writer->save('php://output');
@@ -132,14 +132,16 @@ class CustomerManagerController extends Controller
             $customers = customer::where('user_id', $currentUserId)->get();
         }
 
-        $data_array [] = array("CustomerName","Email","Phone Number","CourseName","How did they hear about us","Gender","Status","Date of Inquiry");
+        $data_array [] = array("CustomerName","Email","Phone Number","Age Group","Country","Education Level","How did they hear about us","Gender","Status","Date of Inquiry");
         foreach($customers as $customer)
         {
             $data_array[] = array(
                 'CustomerName' =>$customer->name,
                 'Email' => $customer->email,
                 'Phone Number' => $customer->phone,
-                'CourseName' => $customer->education_level,
+                'Age Group'=> $customer->date_of_birth,
+                'Country'=>$customer->country,
+                'Education Level' => $customer->education_level,
                 'How did they hear about us' => $customer->how_did_you_hear,
                 'Gender' => $customer->gender,
                 'Status' => $customer->status,

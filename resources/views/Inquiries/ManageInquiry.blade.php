@@ -151,7 +151,9 @@
 
                     </tbody>
                 </table>
-                </div>
+                {{ $inquiries->links()}}
+
+            </div>
                 </form>
         </div>
 
