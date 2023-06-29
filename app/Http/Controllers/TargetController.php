@@ -35,7 +35,7 @@ class TargetController extends Controller
 
         toast('User Target has been set successfully.', 'success');
 
-        return redirect()->route('dashboard');
+        return redirect()->route('usermanage.index');
     }
 
 }

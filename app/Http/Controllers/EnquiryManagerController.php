@@ -137,10 +137,9 @@ class EnquiryManagerController extends Controller
             'field_of_study' => 'nullable',
             'how_did_you_hear' => 'required',
             'consent_terms' => 'required|string',
-            'message' => 'string',
-            'category' => 'required',
+            'message' => 'required|string',
+            'mode_of_inquiry' => 'required',
             'course_name' => 'nullable',
-            'subject' => 'required',
         ]);
 
         $customer = customer::where('email', $request->input('email'))->first();
@@ -168,9 +167,8 @@ class EnquiryManagerController extends Controller
             'message' => $request->input('message'),
             'customer_id' => $customer->id,
             'user_id' => $userId,
-            'category' => $request->input('category'),
+            'mode_of_inquiry' => $request->input('mode_of_inquiry'),
             'course_name' => $request->input('course_name'),
-            'subject' => $request->input('subject'),
         ];
         inquiries::create($inquiries);
 
@@ -233,14 +231,15 @@ class EnquiryManagerController extends Controller
            })->with('customer', 'user')->get();
        }
 
-       $data_array [] = array("CustomerName","Email","CourseName","Message","Status","Location",'User','Date of Inquiry');
+       $data_array [] = array("CustomerName","Email","CourseName",'Mode of Inquiry',"Inquiry Details","Status","Location",'User','Date of Inquiry');
        foreach($inquiries as $inquiry)
        {
            $data_array[] = array(
                'CustomerName' =>$inquiry->customer?->name,
                'Email' => $inquiry->customer?->email,
                'CourseName' => $inquiry->course_name,
-               'Message' => $inquiry->message,
+               'Mode of Inquiry' => $inquiry->mode_of_inquiry,
+               'Inquiry Details' => $inquiry->message,
                'Status' => $inquiry->customer?->status,
                'Location' =>$inquiry->user?->campus,
                'User'=>$inquiry->user->name,

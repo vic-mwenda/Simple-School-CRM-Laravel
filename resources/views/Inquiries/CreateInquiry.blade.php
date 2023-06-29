@@ -92,21 +92,17 @@
                     <div class="row container ">
                         <div class="col-md-6">
                             <div class="form-group pt-2">
-                               <label for="inquiryType" class="fw-bold">Inquiry Type<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
-                               <select class="form-control" id="inquiryType" name="category">
-                                  <option value="general">General Inquiry</option>
-                                  <option value="course">Course Inquiry</option>
+                               <label for="mode_of_inquiry" class="fw-bold">Mode Of Inquiry<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
+                               <select class="form-control" id="mode_of_inquiry" name="mode_of_inquiry" required>
+                                  <option value="walk-in">walk-in</option>
+                                  <option value="email">email</option>
+                                  <option value="telephone">telephone</option>
+                                  <option value="whatsapp">whatsapp message</option>
+                                  <option value="facebook">facebook message</option>
                                </select>
-                                <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('mode_of_inquiry')" class="mt-2" />
                             </div>
-                            <div class="form-group pt-2">
-                               <label class="fw-bold" for="subject">Subject<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
-                               <input type="text" class="form-control" id="subject" name="subject" value="{{ old('subject') }}" placeholder="Enter the subject of your inquiry">
-                                <x-input-error :messages="$errors->get('subject')" class="mt-2" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group pt-2" id="courseNameField" style="display: none;">
+                            <div class="form-group pt-2" id="courseNameField">
                                 <label class="fw-bold" for="courseName">Course Name<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
                                 <input class="form-control" list="datalistOptions" id="courseName" name="course_name" value="{{ old('course_name') }}" placeholder="Enter course name">
                                 <datalist id="datalistOptions">
@@ -116,9 +112,19 @@
                                 </datalist>
                                 <x-input-error :messages="$errors->get('course_name')" class="mt-2" />
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group pt-2">
-                                <label class="fw-bold" for="message">Message</label>
-                                <textarea class="form-control" name="message" id="message" rows="5" value="{{ old('message') }}" placeholder="Enter your message"></textarea>
+                                <label class="fw-bold" for="message">Subject of Inquiry</label>
+                                <select class="form-control" id="message" name="message" required>
+                                    <option value="Course Content and Curriculum">Course Content and Curriculum</option>
+                                    <option value="Admission and Application Query">Admission and Application Query</option>
+                                    <option value="Financial Query and Scholarships">Financial Query and Scholarships</option>
+                                    <option value="Program Duration and Scheduling">Program Duration and Scheduling</option>
+                                    <option value="Career Opportunities and Alumni Network">Career Opportunities and Alumni Network</option>
+                                    <option value="Prerequisites and Entry Requirements">Prerequisites and Entry Requirements</option>
+                                    <option value="Support Services and Campus Facilities">Support Services and Campus Facilities</option>
+                                </select>
                                 <x-input-error :messages="$errors->get('message')" class="mt-2" />
                             </div>
                         </div>
@@ -199,18 +205,6 @@
                 </form>
             </div>
     </section>
-    <script>
-        const inquiryTypeDropdown = document.getElementById("inquiryType");
-        const courseNameField = document.getElementById("courseNameField");
-
-        inquiryTypeDropdown.addEventListener("change", function() {
-            if (this.value === "course") {
-                courseNameField.style.display = "block";
-            } else {
-                courseNameField.style.display = "none";
-            }
-        });
-    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {

@@ -38,7 +38,7 @@
                             </tr>
                             <tr>
                                 <td>Subject</td>
-                                <td><i style="color: #012970" class="bi bi-journal-plus"></i> {{$inquiry->subject}}</td>
+                                <td><i style="color: #012970" class="bi bi-journal-plus"></i> {{$inquiry->mode_of_inquiry}}</td>
                             </tr>
                             <tr>
                                 <td>Additional information</td>

@@ -14,11 +14,10 @@ class inquiries extends Model
 
     protected $fillable = [
         'message',
-        'category',
         'customer_id',
         'user_id',
         'course_name',
-        'subject'
+        'mode_of_inquiry'
     ];
 
     public function customer(): BelongsTo

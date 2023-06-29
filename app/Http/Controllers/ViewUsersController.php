@@ -24,7 +24,7 @@ class ViewUsersController extends Controller
 
     function getTargetRateForUser($userId)
     {
-        $target = user_targets::where('user_id', $userId)->first();
+        $target = user_targets::where('user_id', $userId)->latest()->first();
 
         if (!$target) {
             return null;
@@ -98,7 +98,7 @@ class ViewUsersController extends Controller
 
         $ConversionRate = $this->calculateConversionRate($user->id);
         $TargetCustomers = $this->getTargetRateForUser($user->id);
-        $TargetRate = user_targets::where('user_id',$user->id)->select('rate')->first();
+        $TargetRate = user_targets::where('user_id',$user->id)->latest()->select('rate')->first();
 
 
         $start = '2023-01-01'; // To be replaced with the desired start date gotten from UI

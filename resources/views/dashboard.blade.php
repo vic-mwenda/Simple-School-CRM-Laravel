@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="row">
                     <div class="col-lg-4">
-                        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight pt-12"> Manage your inquiries</h2>
+                        <h2 class="font-bold text-xl text-gray-800 dark:text-gray-200 leading-tight pt-12"> Manage your inquiries</h2>
                         <h3 class="text-sm text-gray-600 dark:text-gray-400">Get to view and extract relevant data from inquiries</h3>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <div class="flex items-center">
-                                        Subject
+                                        Mode of Inquiry
                                         <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
                                     </div>
                                 </th>
@@ -40,7 +40,7 @@
                                     {{$inquiry->message}}
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{$inquiry->category}}
+                                    {{$inquiry->mode_of_inquiry}}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{$inquiry->course_name}}
@@ -49,6 +49,11 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <a href="{{route('manageinquiry.index')}}" class="w-100 inline-flex items-center">
+                        <button type="button" class="w-100 text-gray-900 bg-white border hover:bg-gray-300 border-gray-300 focus:outline-none  focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                                View all inquiries
+                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -67,6 +72,117 @@
 
 
                 </div>
+            </div>
+
+            <div class="row">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h2 class="font-bold text-xl text-gray-800 dark:text-gray-200 leading-tight pt-12"> Manage your Customers</h2>
+                        <h3 class="text-sm text-gray-600 dark:text-gray-400">See your customers and extract required data from your customer base</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Customer name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    <div class="flex items-center">
+                                        Customer Email
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    <div class="flex items-center">
+                                        Status
+                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($customers as $customer)
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{$customer->name}}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{$customer->email}}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            @if($customer->status =="pending" )
+                                                <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div> pending
+                                            @elseif($customer->status =="active")
+                                                <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> active
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <a href="{{route('customers.index')}}" class="w-100 inline-flex items-center">
+                            <button type="button" class="w-100 text-gray-900 bg-white border hover:bg-gray-300 border-gray-300 focus:outline-none  focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                                View all our customers
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h2 class="font-bold text-xl text-gray-800 dark:text-gray-200 leading-tight pt-12"> Insights overview
+                        </h2>
+                        <h3 class="text-sm text-gray-600 dark:text-gray-400">Review your performance and more</h3>
+                    </div>
+                </div>
+
+                    <div class="md:bg-white grid grid-cols-2 md:grid-cols-3 gap-4 pt-6 border border-gray-200 rounded-lg shadow-sm">
+                        <div>
+                            <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
+                                <blockquote class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Inquiries Handled</h3>
+                                    <p class="my-4">Number of inquiries that you have lodged</p>
+                                </blockquote>
+                                <figcaption class="flex items-center justify-center space-x-3">
+                                    <dt class="mb-2 text-3xl font-extrabold">{{$TotalInquiries}}</dt>
+                                </figcaption>
+                            </figure>
+                        </div>
+                        <div>
+                            <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-tr-lg dark:bg-gray-800 dark:border-gray-700">
+                                <blockquote class="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Customers Handled</h3>
+                                    <p class="my-4">Number of customers that you have handled</p>
+                                </blockquote>
+                                <figcaption class="flex items-center justify-center space-x-3">
+                                    <dt class="mb-2 text-3xl font-extrabold">{{$totalCustomers}}</dt>
+                                </figcaption>
+                            </figure>
+                        </div>
+                        <div>
+                            <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-tr-lg dark:bg-gray-800 dark:border-gray-700">
+                                <div class="col-12">
+                                    <div class="card-body">
+                                        <canvas id="userChart" class="rounded shadow"></canvas>
+                                    </div>
+                                </div>
+                            </figure>
+                        </div>
+                        <a href="{{route('insights.index')}}" class="w-100 inline-flex items-center">
+                            <button type="button" class="w-100 text-gray-900 bg-white border hover:bg-gray-300 border-gray-300 focus:outline-none  focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                                View Insights
+                            </button>
+                        </a>
+                    </div>
+
             </div>
 
             <div class="row">
@@ -110,6 +226,62 @@
         </div>
 
     </section>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+
+        var ctx = document.getElementById('userChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels:  {!!json_encode($chart->labels)!!} ,
+                datasets: [
+                    {
+                        label: 'Inquiries',
+                        data:  {!! json_encode($chart->dataset)!!} ,
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    },
+                ]
+            },
+
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function(value) {if (value % 1 === 0) {return value;}}
+                        },
+                        scaleLabel: {
+                            display: true
+                        }
+                    }]
+                },
+                tooltip: {
+                    enabled: true
+                },
+                legend: {
+                    labels: {
+                        // This more specific font property overrides the global property
+                        fontColor: '#122C4B',
+                        fontFamily: "'Muli', sans-serif",
+                        padding: 25,
+                        boxWidth: 25,
+                        fontSize: 14,
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 10,
+                        top: 0,
+                        bottom: 20
+                    }
+                }
+            }
+        });
+    </script>
 
 </x-app-layout>
 

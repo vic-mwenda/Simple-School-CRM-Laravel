@@ -17,6 +17,9 @@
                         <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Customer Inquiries</button>
                     </li>
                     <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="feedback-tab" data-tabs-target="#feedback" type="button" role="tab" aria-controls="feedback" aria-selected="false">Feedback</button>
+                    </li>
+                    <li class="mr-2" role="presentation">
                         <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Status</button>
                     </li>
                 </ul>
@@ -108,10 +111,10 @@
                                     Course Inquired
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Subject of Inquiry
+                                    Mode of Inquiry
                                 </th>
                                 <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                    Message
+                                    Subject of Inquiry
                                 </th>
                             </tr>
                             </thead>
@@ -129,10 +132,52 @@
                                     {{$inquiry->course_name}}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{$inquiry->subject}}
+                                    {{$inquiry->mode_of_inquiry}}
                                 </td>
                                 <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
                                     {{$inquiry->message}}
+                                </td>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
+
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                    Date of Feedback
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Subject of Inquiry
+                                </th>
+                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                    Course Customer Had Inquired
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Feedback Message
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($feedbacks as $feedback)
+
+                                <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    {{$feedback->created_at}}
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{$feedback->inquiry?->message}}
+                                </td>
+                                <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                                    {{$feedback->inquiry?->course_name}}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{$feedback->feedback}}
                                 </td>
                             </tr>
                             @endforeach

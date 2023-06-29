@@ -4,16 +4,17 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Exception;
 use App\Models\User;
+
 class GoogleAuthController extends Controller
 {
     public function signInwithGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->scopes(['email'])->redirect();
     }
     public function callbackToGoogle()
     {
 
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::driver('google')->stateless()->user();
 
         $finduser = User::where('email', $user->email)->first();
 

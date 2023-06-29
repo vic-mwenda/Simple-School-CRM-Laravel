@@ -132,7 +132,7 @@
                             {{$inquiry->customer?->email}}
                         </td>
                         <td class="px-6 py-4">
-                            {{$inquiry->category}}
+                            {{$inquiry->mode_of_inquiry}}
                         </td>
                         <td class="px-6 py-4">
                             {{$inquiry->course_name}}
@@ -205,7 +205,7 @@
           ${inquiry.customer ? inquiry.customer.email : ''}
         </td>
         <td class="px-6 py-4">
-          ${inquiry.category}
+          ${inquiry.mode_of_inquiry}
         </td>
         <td class="px-6 py-4">
           ${inquiry.course_name}

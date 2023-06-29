@@ -6,6 +6,7 @@ use App\Models\Students;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\customer;
+use App\Models\Feedback;
 use App\Models\inquiries;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
@@ -54,7 +55,8 @@ class CustomerManagerController extends Controller
     function view(customer $customer){
         $inquiries = $customer->inquiries;
         $user = $customer->user;
-        return view('customers.view', ['customers' => $customer],compact('inquiries','user'));
+        $feedbacks = $customer->feedbacks()->with('inquiry')->get();
+        return view('customers.view', ['customers' => $customer],compact('inquiries','user','feedbacks'));
     }
 
     public function filter(Request $request)
@@ -82,7 +84,6 @@ class CustomerManagerController extends Controller
         // Return the filtered customers
         return response()->json(['customers' => $filteredCustomers]);
     }
-
 
     /**
      * Handle bulk actions

@@ -47,6 +47,11 @@ class customer extends Model
         return $this->hasOne(Students::class,'email','email');
     }
 
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'customer_id', 'id');
+    }
+
     /**
      * Route notifications for the Vonage channel.
      */

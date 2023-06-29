@@ -159,7 +159,7 @@
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical" style="font-size: 2rem;"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                         <li><a class="dropdown-item" href="{{route('customer.view',$customer->id)}}"><i class="bi bi-eye-fill"></i> View Customer Details</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('manageinquiry.download',$customer->id)}}"><i class="bi bi-box-arrow-down"></i> Download Customer Details</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('feedback.create',$customer->id)}}"><i class="bi bi-clipboard"></i> Feedback</a></li>
                                     </ul>
                                 </div>
                             </td>

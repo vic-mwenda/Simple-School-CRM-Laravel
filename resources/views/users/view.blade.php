@@ -328,9 +328,10 @@
                                             <figcaption class="flex items-center justify-center space-x-3">
                                                 <dt class="mb-2 text-3xl font-extrabold">{{$TotalConversions}}/ {{$TargetCustomers}}</dt>
                                             </figcaption>
+                                                Progress: {{ $progressRate = round($TotalConversions/$TargetCustomers*100,1) }}%
 
-                                            exit<div class="w-50 bg-gray-200 rounded-full dark:bg-gray-700">
-                                                <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: {{$ConversionRate}}%"> {{$ConversionRate}}</div>
+                                            <div class="w-50 bg-gray-200 rounded-full dark:bg-gray-700">
+                                                <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: {{$progressRate}}%"></div>
                                             </div>
                                         </figure>
                                     </div>
@@ -360,7 +361,7 @@
                                </div>
                         </div>
 
-                    </>
+                </div>
                     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
                     <script>

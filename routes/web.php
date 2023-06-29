@@ -9,6 +9,7 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\InsightsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomerManagerController;
+use App\Http\Controllers\FeedbackManagerController;
 use App\Http\Controllers\TargetController;
 use Illuminate\Support\Facades\Route;
 
@@ -75,7 +76,7 @@ Route::post('/bulk-action',[EnquiryManagerController::class,'action'])->name('ma
 //OAUTH2 google login
 
 Route::get('auth/google', [GoogleAuthController::class, 'signInwithGoogle'])->name('google.login');
-Route::get('callback/google', [GoogleAuthController::class, 'callbackToGoogle']);
+Route::get('/callback', [GoogleAuthController::class, 'callbackToGoogle']);
 
 // Insights module
 Route::get('/insights',[InsightsController::class,'Show'])->middleware('role:0,1')->name('insights.index');
@@ -88,4 +89,7 @@ Route::post('/customers/bulk-action',[CustomerManagerController::class,'action']
 Route::get('/customers/action/refresh',[CustomerManagerController::class,'refresh'])->name('customer.refresh');
 Route::get('/mycustomers',[CustomerManagerController::class,'getUserCustomers'])->name('mycustomers');
 
+//feedback manager
+Route::get('/feedback/{customer}',[FeedbackManagerController::class,'create'])->name('feedback.create');
+Route::post('/feedback/store',[FeedbackManagerController::class,'store'])->name('feedback.store');
 
