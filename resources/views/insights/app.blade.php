@@ -3,6 +3,19 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Insights') }}
         </h2>
+        <form action="{{route("insights.index")}}" method="get">
+           <div class="row">
+            <div class="col-lg-5 mb-2">
+                <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Start Date">
+            </div>
+            <div class="col-lg-5 mb-2">
+                <input type="date" class="form-control" name="end_date" id="end_date" placeholder="End Date">
+            </div>
+            <div class="col-lg-2">
+                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 ">Submit <i style="font-size: 15px;color: white;" class="bi bi-send-plus"></i></button>
+            </div>
+           </div>
+        </form>
     </x-slot>
 
     <section class="section dashboard">
@@ -13,22 +26,8 @@
                 <!-- Inquiries Card -->
                     <div class="col-xxl-6 col-md-6">
                         <div class="card info-card sales-card">
-
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
-
                             <div class="card-body">
-                                <h5 class="card-title">Inquiries <span>| Today</span></h5>
+                                <h5 class="card-title">Inquiries</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -36,8 +35,6 @@
                                     </div>
                                     <div class="ps-3">
                                         <h6>{{$TotalInquiries}}</h6>
-                                        <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
                                     </div>
                                 </div>
                             </div>
@@ -49,30 +46,15 @@
 
                         <div class="card info-card customers-card">
 
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
-
                             <div class="card-body">
-                                <h5 class="card-title">visitors <span>| This Year</span></h5>
+                                <h5 class="card-title">Customers <span></span></h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-people"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>1244</h6>
-                                        <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
-
+                                        <h6>{{$SumCustomers}}</h6>
                                     </div>
                                 </div>
 
@@ -83,21 +65,10 @@
 
                     <!-- Reports -->
                     <div class="col-12">
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                </li>
-
-                                <li><a class="dropdown-item" href="#">Today</a></li>
-                                <li><a class="dropdown-item" href="#">This Month</a></li>
-                                <li><a class="dropdown-item" href="#">This Year</a></li>
-                            </ul>
-                        </div>
+                    
 
                         <div class="card-body">
-                            <h5 class="card-title">Inquiry Report <span>/Today</span></h5>
+                            <h5 class="card-title">Inquiry Report</h5>
                              <canvas id="userChart" class="rounded shadow"></canvas>
                         </div>
                     </div>
@@ -106,19 +77,7 @@
 
             <div class="col-lg-6">
                <div class="row">
-                <!-- Reports -->
-                    <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                                <h6>Filter</h6>
-                            </li>
-
-                            <li><a class="dropdown-item" href="#">Today</a></li>
-                            <li><a class="dropdown-item" href="#">This Month</a></li>
-                            <li><a class="dropdown-item" href="#">This Year</a></li>
-                        </ul>
-                    </div>
+               
                 <div class="card-body">
                     <h5 class="card-title">Sources Report <span>/Today</span></h5>
                         <canvas id="userPieChart" style="height: 400px;padding-top: 30px"></canvas>
@@ -147,6 +106,7 @@
              </div>
         </div>
         </div>
+
         <div class="col-lg-4 fixed-card">
                 <div class="card">
                     <div class="card-body">
@@ -209,7 +169,6 @@
 
             </div>
         </div>
-
     </section>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -219,11 +178,11 @@
         var chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels:  {!!json_encode($chart->labels)!!} ,
+                labels:  {!!json_encode($lineGraphData->labels)!!} ,
                 datasets: [
                     {
                         label: 'Inquiries',
-                        data:  {!! json_encode($chart->dataset)!!} ,
+                        data:  {!! json_encode($lineGraphData->dataset)!!} ,
                         fill: false,
                         borderColor: 'rgb(75, 192, 192)',
                         tension: 0.1
@@ -276,9 +235,9 @@
         var pieChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: {!!json_encode($PieChart->labels)!!},
+                labels: {!!json_encode($pieChartData->labels)!!},
                 datasets: [{
-                    data:{!!json_encode($PieChart->dataset)!!},
+                    data:{!!json_encode($pieChartData->dataset)!!},
                     backgroundColor:['#ff6384', '#36a2eb', '#cc65fe', '#ffce56','red','blue','yellow']
 
                 }]

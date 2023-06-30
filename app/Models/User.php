@@ -26,7 +26,8 @@ class User extends Authenticatable
         'first_login',
         'campus',
         'phone_number',
-        'last_seen'
+        'last_seen',
+        'image_path'
     ];
 
     /**

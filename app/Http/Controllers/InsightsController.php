@@ -12,20 +12,62 @@ use App\Models\PieChart;
 class InsightsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * method that gets all the insights
      */
-    public function index()
+    public function getInsights(Request $request)
     {
-        $inquiries= inquiries::all();
-        return $inquiries->count();
+        $startDate = $request->input('start_date', '2023-01-01');
+        $endDate = $request->input('end_date', '2023-12-31');
+
+
+        $pieChartData = $this->generatePieChart($startDate, $endDate);
+        $lineGraphData = $this->generateLineGraph($startDate, $endDate);
+        $TotalInquiries = $this->getInquiriesCount($startDate, $endDate);
+        $SumCustomers = $this->getCustomersCount($startDate, $endDate);
+
+        return view('insights.app', compact('pieChartData', 'lineGraphData','TotalInquiries','SumCustomers'));
     }
+
     /**
-     * Show the Pie_chart containing statistics for inquiries-How they heard about us.
+     * Get the total number of inquiries
+     */
+    public function getInquiriesCount($startDate, $endDate)
+    {
+    $query = inquiries::query();
+    if ($startDate && $endDate) {
+        $query->whereBetween('created_at', [$startDate, $endDate]);
+    }
+
+    $inquiries = $query->get();
+
+    return $inquiries->count();
+    }
+
+      /**
+     * Get the total number of inquiries
+     */
+    public function getCustomersCount($startDate, $endDate)
+    {
+    $query = customer::query();
+    if ($startDate && $endDate) {
+        $query->whereBetween('created_at', [$startDate, $endDate]);
+    }
+
+    $customers = $query->get();
+
+    return $customers->count();
+   }
+
+    
+
+    /**
+     * Show the PieChart containing illustration for inquiries-How they heard about us.
      */
 
-    public function PieChart(){
-        $start = '2023-01-01'; // Replace with your desired start date
-        $end = '2023-12-31'; // Replace with your desired end date
+    private function generatePieChart($startDate, $endDate){
+
+        $start = $startDate; 
+        $end = $endDate;
 
         $results = customer::selectRaw('how_did_you_hear, COUNT(*) AS total')
             ->whereBetween('created_at', [$start, $end])
@@ -45,14 +87,13 @@ class InsightsController extends Controller
     }
 
     /**
-     * Show the chart containing statistics for inquiries.
+     * Show the lineGraph illustrating statistics for inquiries.
      */
-    function Show()
-    {
-        $TotalInquiries=$this->index();
 
-        $start = '2023-01-01'; // To be replaced with the desired start date gotten from UI
-        $end = '2023-12-31'; // To be replaced with the desired start date gotten from UI
+    private function generateLineGraph($startDate, $endDate)
+    {
+        $start = $startDate; 
+        $end = $endDate;
 
         $results = inquiries::selectRaw('COUNT(*) AS y, DATE(created_at) AS x')
             ->whereBetween('created_at', [$start, $end])
@@ -60,15 +101,11 @@ class InsightsController extends Controller
             ->orderBy('x', 'asc')
             ->get();
 
-        // Prepare the data for returning with the view
-        $chart = new Chart;
-        $chart->labels = $results->pluck('x')->toArray();
-        $chart->dataset = $results->pluck('y')->toArray();
-        $chart->colours = ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'];
-        $PieChart = $this->PieChart();
+        $LineGraph = new Chart;
+        $LineGraph->labels = $results->pluck('x')->toArray();
+        $LineGraph->dataset = $results->pluck('y')->toArray();
+        $LineGraph->colours = ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'];
 
-        return view('insights.app', compact('chart','TotalInquiries','PieChart'));
-
-
+        return $LineGraph;
     }
 }

@@ -37,7 +37,15 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-          <i class="bi bi-person"></i><span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
+            @if(Auth::user()->image_path)
+               <img class="w-8 h-8 rounded-full" src="{{ asset('storage/'.Auth::user()->image_path) }}" alt="Rounded avatar">
+            @else 
+              <div class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                <svg class="absolute w-10 h-10 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+              </div>
+            @endif
+            
+          <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
           </a>
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">

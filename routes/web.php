@@ -41,9 +41,8 @@ Route::middleware('role:0,1')->group(function () {
     //Target manager
     Route::post('/target',[TargetController::class,'store'])->name('targets.store');
     Route::get('/target/view/{user}',[TargetController::class,'view'])->name('targets.view');
-
-    //export functionality
 });
+
 //dashboard access routes
 Route::get('export',[EnquiryManagerController::class,'exportData'])->middleware(['auth', 'verified'])->name('export.sheet');
 Route::get('export/customers',[CustomerManagerController::class,'exportData'])->middleware(['auth', 'verified'])->name('export.customers');
@@ -79,7 +78,7 @@ Route::get('auth/google', [GoogleAuthController::class, 'signInwithGoogle'])->na
 Route::get('/callback', [GoogleAuthController::class, 'callbackToGoogle']);
 
 // Insights module
-Route::get('/insights',[InsightsController::class,'Show'])->middleware('role:0,1')->name('insights.index');
+Route::get('/insights',[InsightsController::class,'getInsights'])->middleware('role:0,1')->name('insights.index');
 
 //customer manager
 Route::get('/customers',[CustomerManagerController::class,'index'])->name('customers.index');
@@ -93,3 +92,5 @@ Route::get('/mycustomers',[CustomerManagerController::class,'getUserCustomers'])
 Route::get('/feedback/{customer}',[FeedbackManagerController::class,'create'])->name('feedback.create');
 Route::post('/feedback/store',[FeedbackManagerController::class,'store'])->name('feedback.store');
 
+//Image Upload
+Route::post('/image/upload', [ProfileController::class,'upload'])->name('image.upload');
