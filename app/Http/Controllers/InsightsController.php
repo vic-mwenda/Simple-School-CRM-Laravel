@@ -18,8 +18,7 @@ class InsightsController extends Controller
     {
         $startDate = $request->input('start_date', '2023-01-01');
         $endDate = $request->input('end_date', '2023-12-31');
-
-
+        
         $pieChartData = $this->generatePieChart($startDate, $endDate);
         $lineGraphData = $this->generateLineGraph($startDate, $endDate);
         $TotalInquiries = $this->getInquiriesCount($startDate, $endDate);

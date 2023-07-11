@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Feedback extends Model
 {
          use HasFactory;
-
-
-
          protected $fillable = [
              'inquiry_id',
              'customer_id',
@@ -21,7 +18,7 @@ class Feedback extends Model
 
          public function inquiry()
          {
-            return $this->belongsTo(inquiries::class);
+            return $this->belongsTo(inquiries::class,'inquiry_id','id');
          }
 
          public function customer()

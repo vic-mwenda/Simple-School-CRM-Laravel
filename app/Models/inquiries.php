@@ -29,4 +29,13 @@ class inquiries extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function course()
+    {
+        return $this->belongsTo(Course::class,'course_name','course_name');
+    }
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'inquiry_id','id');
+    }
+    
 }

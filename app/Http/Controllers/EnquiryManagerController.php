@@ -201,7 +201,7 @@ class EnquiryManagerController extends Controller
            $spreadSheet->getActiveSheet()->fromArray($inquiry_data);
            $Excel_writer = new Xls($spreadSheet);
            header('Content-Type: application/vnd.ms-excel');
-           header('Content-Disposition: attachment;filename="Inquiries_ExportedData.xls"');
+           header('Content-Disposition: attachment;filename="Inquiries_data.xls"');
            header('Cache-Control: max-age=0');
            ob_end_clean();
            $Excel_writer->save('php://output');
@@ -217,7 +217,7 @@ class EnquiryManagerController extends Controller
     $currentUserId = Auth::id();
 
        if ($current_user->role == '0'||$current_user->role == '3'){
-           $inquiries = inquiries::with('customer', 'user')->get();
+           $inquiries = inquiries::with('customer', 'user','course','feedbacks')->get();
        }elseif ($current_user->role == '1'){
            $campus = $current_user->campus;
            $inquiries = inquiries::whereHas('user', function ($query) use ($campus) {
@@ -231,18 +231,23 @@ class EnquiryManagerController extends Controller
            })->with('customer', 'user')->get();
        }
 
-       $data_array [] = array("CustomerName","Email","CourseName",'Mode of Inquiry',"Inquiry Details","Status","Location",'User','Date of Inquiry');
+       $data_array [] = array("CustomerName","Contact","Gender","CourseName","CourseDept","CourseLevel",'Mode of Inquiry',"Inquiry Details","Status","Location","Feedback",'AdmissionManager','Date of Inquiry');
        foreach($inquiries as $inquiry)
        {
+           $feedback=$inquiry->feedbacks->first();
            $data_array[] = array(
                'CustomerName' =>$inquiry->customer?->name,
-               'Email' => $inquiry->customer?->email,
-               'CourseName' => $inquiry->course_name,
+               'Contact' => $inquiry->customer?->phone,
+               'Gender'=>$inquiry->customer?->gender,
+               'CourseName' => $inquiry->course?->course_name,
+               'CourseDept'=>$inquiry->course?->department,
+               'CourseLevel'=>$inquiry->course?->level,
                'Mode of Inquiry' => $inquiry->mode_of_inquiry,
                'Inquiry Details' => $inquiry->message,
                'Status' => $inquiry->customer?->status,
                'Location' =>$inquiry->user?->campus,
-               'User'=>$inquiry->user->name,
+               'Feedback'=>$feedback?->feedback,
+               'AdmissionManager'=>$inquiry->user?->name,
                'Date of Inquiry'=>$inquiry->created_at
            );
        }

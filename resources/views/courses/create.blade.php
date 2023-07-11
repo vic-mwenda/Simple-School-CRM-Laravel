@@ -30,6 +30,19 @@
 
                         </div>
                         <div class="form-group">
+                            <label style="font-weight: bold;padding-top: 10px;" for="school">Course School<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
+                            <select class="form-control" id="school" name="school">
+                                <option value="School of education,arts&social sciences">School of education,arts & social sciences</option>
+                                <option value="School of business & economics">School of business & economics</option>
+                                <option value="School of ICT,media & engineering">School of ICT,media & engineering</option>
+                                <option value="ZU TVET Centre">ZU TVET CENTRE</option>
+                                <option value="Corporate Academy">Corporate Academy</option>
+                                <option value="Centre for professional certifications">Centre for professional certifications</option>
+                            </select>
+                            <x-input-error :messages="$errors->get('school')" class="mt-2" />
+                        </div>
+
+                        <div class="form-group">
                             <label style="font-weight: bold;padding-top: 10px;" for="department">Course department<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
                             <select class="form-control" id="department" name="department">
                                 <option value="Department of Science">Department of Science</option>
@@ -45,11 +58,11 @@
                         <div class="form-group">
                             <label style="font-weight: bold;padding-top: 10px;" for="level">Course Level<i style="font-size: 7px;float: right;color: red" class="bi bi-asterisk"></i></label>
                             <select class="form-control" id="level" name="level">
-                                <option value="male">Masters</option>
-                                <option value="female">Degree</option>
-                                <option value="other">Diploma</option>
-                                <option value="other">Certificate</option>
-                                <option value="other">CPC</option>
+                                <option value="masters">Masters</option>
+                                <option value="degree">Degree</option>
+                                <option value="diploma">Diploma</option>
+                                <option value="certificate">Certificate</option>
+                                <option value="professional">professional</option>
                             </select>
                             <x-input-error :messages="$errors->get('level')" class="mt-2" />
                         </div>

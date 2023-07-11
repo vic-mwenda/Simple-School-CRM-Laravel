@@ -27,7 +27,7 @@
 
     <div class="logo d-flex align-items-center justify-content-between">
       <a href="{{ route('dashboard') }}" class="d-flex align-items-center">
-        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+
       </a>
     </div>
       <i class="bi bi-list toggle-sidebar-btn"></i>

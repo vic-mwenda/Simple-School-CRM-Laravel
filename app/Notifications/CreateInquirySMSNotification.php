@@ -40,8 +40,7 @@ class CreateInquirySMSNotification extends Notification implements ShouldQueue
      */
     public function toVonage(object $notifiable):VonageMessage
     {
-        return (new VonageMessage)->content('We have received your inquiry');
+        return (new VonageMessage)->content('Zetech University has received your inquiry');
     }
-
 
 }

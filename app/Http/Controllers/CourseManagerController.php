@@ -16,7 +16,6 @@ class CourseManagerController extends Controller
     {
         $courses = Course::with('campuses')->paginate(5);
         return view('courses.index',compact('courses'));
-
     }
 
     /**
@@ -36,6 +35,7 @@ class CourseManagerController extends Controller
         $validatedData = $request->validate([
             'course_name' => 'required|string',
             'campuses' => 'required|array',
+            'school'=>'required|string',
             'department' => 'required|string',
             'level' => 'required|string',
         ]);
@@ -44,6 +44,7 @@ class CourseManagerController extends Controller
         $course->course_name = $validatedData['course_name'];
         $course->department = $validatedData['department'];
         $course->level = $validatedData['level'];
+        $course->CourseSchool= $validatedData['school'];
         $course->save();
 
         $course->campuses()->sync($validatedData['campuses']);
