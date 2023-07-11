@@ -1,7 +1,7 @@
 <p align="center">
   <img src="resources/images/Support.png" style="width: 50px" align="center"/>
 </p>
-## Customeer CRM
+# CustomeerCRM
 
 Customeer is a powerful CRM (Customer Relationship Management) application built with Laravel. It provides a comprehensive solution for managing customer relationships and other related tasks.
 
